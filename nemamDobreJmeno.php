@@ -3,7 +3,11 @@ at https://gw.sandbox.gopay.com/api.
  Production enviroment is located at https://gate.gopay.cz/api. -->
 
 <?php
-//require_once("./src/GoPay.php");
+
+// musi zde byt pro funkci composeru
+require("vendor/autoload.php"); 
+
+//vytvoreni nove platby
 $gopay = GoPay\Api::payments([
     'goid' => 'my goid',
     'clientId' => 'my id',
