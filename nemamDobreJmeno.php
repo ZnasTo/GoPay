@@ -2,18 +2,43 @@
 at https://gw.sandbox.gopay.com/api.
  Production enviroment is located at https://gate.gopay.cz/api. -->
 
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
 <?php
 
 // musi zde byt pro funkci composeru
 require("vendor/autoload.php"); 
 
 //vytvoreni nove platby
-$gopay = GoPay\Api::payments([
-    'goid' => 'my goid',
-    'clientId' => 'my id',
-    'clientSecret' => 'my secret',
-    'gatewayUrl' => 'gateway url'
-]);
+// URL prodejního místa: http://www.ales.recman.cz
+// Test GoID: 8565283375
+// Test SecureKey: zSwQwtAAF6V2Kr7cWVdbVYkW
+// Test ClientID: 1167493503
+// Test ClientSecret: aeNk74bQ
+// Test uživatelské jméno: testUser8565283375
+// Test heslo: P0004331
+define("GO_ID","8565283375");
+define("CLIENT_ID","1167493503");
+define("CLIENT_SECERET","aeNk74bQ");
+define("URL_PRODEJNIHO_MISTA","http://www.ales.recman.cz");
+
+$gopay = GoPay\payments([
+        'goid' => GO_ID,
+        'clientId' => CLIENT_ID,
+        'clientSecret' => CLIENT_SECERET,
+        'gatewayUrl' => 'https://gw.sandbox.gopay.com/',
+        'scope' => GoPay\Definition\TokenScope::ALL,
+        'language' => GoPay\Definition\Language::CZECH,
+        'timeout' => 30
+    ]);
+    
 
 use GoPay\Definition\Language;
 use GoPay\Definition\Payment\Currency;
@@ -60,14 +85,15 @@ $response = $gopay->createPayment([
             'count' => 1,
             'vat_rate' => VatRate::RATE_3
             ]],
-    'eet' => [
-            'celk_trzba' => 139951,
-            'zakl_dan1' => 99160,
-            'dan1' => 20830,
-            'zakl_dan2' => 17358,
-            'dan2' => 2603,
-            'mena' => Currency::CZECH_CROWNS
-    ],
+// TODO wrong format for some reason
+//     'eet' => [
+//             'celk_trzba' => 139951,
+//             'zakl_dan1' => 99160,
+//             'dan1' => 20830,
+//             'zakl_dan2' => 17358,
+//             'dan2' => 2603,
+//             'mena' => Currency::CZECH_CROWNS
+//     ],
     'additional_params' => [['name' => 'invoicenumber',
             'value' => '2015001003'
     ]],
@@ -78,5 +104,14 @@ $response = $gopay->createPayment([
     'lang' => Language::CZECH
 ]);
 
-
+// print $response;
+//TODO dodat podminku kdyz funguje
+print $response->json['gw_url'];
+$url = $response->json['gw_url'];
 ?>
+<form action="<?=$url?>" method="post">
+  <button name="pay" type="submit">Zaplatit</button>
+</form>
+    
+    </body>
+</html>
