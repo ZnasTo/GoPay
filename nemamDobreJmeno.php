@@ -85,7 +85,8 @@ $response = $gopay->createPayment([
             'count' => 1,
             'vat_rate' => VatRate::RATE_3
             ]],
-// TODO wrong format for some reason
+// EET bylo v česku zrušeno
+// ----------------------------------------
 //     'eet' => [
 //             'celk_trzba' => 139951,
 //             'zakl_dan1' => 99160,
@@ -105,9 +106,18 @@ $response = $gopay->createPayment([
 ]);
 
 // print $response;
-//TODO dodat podminku kdyz funguje
-print $response->json['gw_url'];
-$url = $response->json['gw_url'];
+//TODO nejaky error handeling mozna
+$url = null;
+if ($response->hasSucceed()) {
+        print $response->json['gw_url'];
+        $url = $response->json['gw_url'];
+        
+}
+else {
+        print 'error';
+        print $response->statusCode;
+
+}
 ?>
 <form action="<?=$url?>" method="post">
   <button name="pay" type="submit">Zaplatit</button>

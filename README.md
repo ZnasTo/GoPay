@@ -9,3 +9,8 @@ Test ClientID: 1167493503
 Test ClientSecret: aeNk74bQ
 Test uživatelské jméno: testUser8565283375
 Test heslo: P0004331
+
+
+nutne dodelat:
+-checkout proces(zadani osobnich informaci, platebni metody atd)
+-databazi transakci
