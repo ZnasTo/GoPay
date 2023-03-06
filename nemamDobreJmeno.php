@@ -49,13 +49,14 @@ use GoPay\Definition\Payment\PaymentItemType;
 
 $response = $gopay->createPayment([
     'payer' => [
-            'default_payment_instrument' => PaymentInstrument::BANK_ACCOUNT,
-            'allowed_payment_instruments' => [PaymentInstrument::BANK_ACCOUNT],
-            'default_swift' => BankSwiftCode::FIO_BANKA,
-            'allowed_swifts' => [BankSwiftCode::FIO_BANKA, BankSwiftCode::MBANK],
+        'default_payment_instrument' => PaymentInstrument::PAYMENT_CARD,
+        //     'default_payment_instrument' => PaymentInstrument::BANK_ACCOUNT,
+        'allowed_payment_instruments' => [PaymentInstrument::BANK_ACCOUNT,PaymentInstrument::PAYMENT_CARD,PaymentInstrument::BITCOIN],
+        //     'default_swift' => BankSwiftCode::FIO_BANKA,
+        'allowed_swifts' => [BankSwiftCode::FIO_BANKA, BankSwiftCode::MBANK],
             'contact' => ['first_name' => 'Zbynek',
                     'last_name' => 'Zak',
-                    'email' => 'test@test.cz',
+                    'email' => 'testovaciEmail@test.cz',
                     'phone_number' => '+420777456123',
                     'city' => 'C.Budejovice',
                     'street' => 'Plana 67',
@@ -99,14 +100,13 @@ $response = $gopay->createPayment([
             'value' => '2015001003'
     ]],
     'callback' => [
-            'return_url' => 'https://www.eshop.cz/return',
-            'notification_url' => 'https://www.eshop.cz/notify'
+            'return_url' => 'http://localhost/GoPay/GoPay/nemamDobreJmeno.php',
+            'notification_url' => 'http://www.your-url.tld/notify'
     ],
     'lang' => Language::CZECH
 ]);
 
-// print $response;
-//TODO nejaky error handeling mozna
+//TODO nejaky error handeling mozna nevim---uvidime
 $url = null;
 if ($response->hasSucceed()) {
         print $response->json['gw_url'];
