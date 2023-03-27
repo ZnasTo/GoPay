@@ -12,6 +12,7 @@ Test heslo: P0004331
 
 
 nutne dodelat:
--predelat do MVC archiTEKKtury
+done:predelat do MVC archiTEKKtury
+- zjistit jake data bude vojta potrebovat ziskat od uzivatele
 -checkout proces(zadani osobnich informaci, platebni metody atd)
 -databazi transakci
