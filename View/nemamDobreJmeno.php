@@ -14,7 +14,7 @@ at https://gw.sandbox.gopay.com/api.
 <?php
 
 // musi zde byt pro funkci composeru
-require("vendor/autoload.php"); 
+require("../Model/vendor/autoload.php"); 
 
 //vytvoreni nove platby
 // URL prodejního místa: http://www.ales.recman.cz
@@ -96,6 +96,7 @@ $response = $gopay->createPayment([
 //             'dan2' => 2603,
 //             'mena' => Currency::CZECH_CROWNS
 //     ],
+// ----------------------------------------
     'additional_params' => [['name' => 'invoicenumber',
             'value' => '2015001003'
     ]],
@@ -114,7 +115,7 @@ if ($response->hasSucceed()) {
         
 }
 else {
-        print 'error';
+        print 'error ';
         print $response->statusCode;
 
 }
