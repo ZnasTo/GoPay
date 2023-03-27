@@ -12,5 +12,6 @@ Test heslo: P0004331
 
 
 nutne dodelat:
+-predelat do MVC archiTEKKtury
 -checkout proces(zadani osobnich informaci, platebni metody atd)
 -databazi transakci
