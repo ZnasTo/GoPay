@@ -1,0 +1,15 @@
+jméno
+příjmení
+email
+telefoní číslo
+
+adresu:
+    město
+    č.p.
+    PSČ
+
+způsob platby
+
+
+pro testování potom můžeme přidat ještě 
+nejaké pole pro zadání cekpvé částky

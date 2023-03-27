@@ -43,7 +43,7 @@ class PaymentController extends Controller
         'currency' => Currency::CZECH_CROWNS,
         'order_number' => '001',// TODO budeme muste pomoci databaze zjistit
         'order_description' => 'obuv',// TODO zkusime pomazat potom
-        'items' => [[
+        'items' => [[ // asi uplně není pro nas podstatné
                 'type' => 'ITEM',
                 'name' => 'obuv',
                 'product_url' => 'https://www.eshop.cz/boty/lodicky',
@@ -72,9 +72,9 @@ class PaymentController extends Controller
     //             'mena' => Currency::CZECH_CROWNS
     //     ],
     // ----------------------------------------
-        'additional_params' => [['name' => 'invoicenumber',
-                'value' => '2015001003'
-        ]],
+// 'additional_params' => [['name' => 'invoicenumber',
+//         'value' => '2015001003'
+// ]],
         'callback' => [
                 'return_url' => 'http://localhost/GoPay/GoPay/View/checkout.php',
                 'notification_url' => 'http://www.your-url.tld/notify'
