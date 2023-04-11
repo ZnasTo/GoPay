@@ -5,6 +5,7 @@ telefoní číslo
 
 adresu:
     město
+    ulice
     č.p.
     PSČ
 
