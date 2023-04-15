@@ -1,9 +1,13 @@
 <?php
 require("htmlTop.php");
-$db = mysqli_connect("localhost","root","","gopay");
-    mysqli_set_charset($db,"utf8");
+// $db = mysqli_connect("localhost","root","","gopay");
+//     mysqli_set_charset($db,"utf8");
 
 if($_SESSION["sprava"]==1){
+    DbController::connectToDb();
+    DbController::getOneReccord();
+
+    
 
 
     
