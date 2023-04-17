@@ -11,7 +11,7 @@ use GoPay\Definition\Payment\PaymentItemType;
 require("../Model/PaymentInitialise.php");
 require("Controller.php");
 
-class PaymentController extends Controller
+class PaymentController 
 {   
     private $buyerData;
     private $response;

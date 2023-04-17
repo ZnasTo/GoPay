@@ -2,7 +2,9 @@
 
 <?php
 const DATABASE_NAME = "gopay";
-class DbController extends Controller 
+
+require("../Model/Db.php");
+class DbController  
 {
     
 
@@ -11,10 +13,10 @@ class DbController extends Controller
         Db::pripoj("localhost","root","",DATABASE_NAME);
 
     }
-    public static function getOneReccord(){
-        return Db::dotazJeden("
+    public static function getReccords(){
+        return Db::dotazVsechny("
         SELECT * 
-        FROM objednavka
+        FROM adresa
         ");
     }
 }

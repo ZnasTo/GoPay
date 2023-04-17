@@ -1,21 +1,27 @@
 <?php
 require("htmlTop.php");
+require("../Controller/DbController.php");
 // $db = mysqli_connect("localhost","root","","gopay");
 //     mysqli_set_charset($db,"utf8");
 
+
 if($_SESSION["sprava"]==1){
     DbController::connectToDb();
-    DbController::getOneReccord();
+    $dotaz = DbController::getReccords();
 
-    
+    $seen_values = array();
+    foreach ($dotaz as $jedenDotaz => $neco) {
+        //TODO nefungaruje
+        
+        foreach ($neco as $jedenNeco => $neco2) {
+            if (!in_array($neco2, $seen_values)) { 
+                echo $neco2 ;
+                $seen_values[] = $neco2; 
+            }
+        }
+    }
 
 
-    
-
-
-
-
-    
 } else {
     print "co tu delas";
 }
