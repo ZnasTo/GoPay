@@ -8,19 +8,24 @@ require("../Controller/DbController.php");
 if($_SESSION["sprava"]==1){
     DbController::connectToDb();
     $dotaz = DbController::getReccords();
-
-    $seen_values = array();
-    foreach ($dotaz as $jedenDotaz => $neco) {
-        //TODO nefungaruje
-        
-        foreach ($neco as $jedenNeco => $neco2) {
-            if (!in_array($neco2, $seen_values)) { 
-                echo $neco2 ;
-                $seen_values[] = $neco2; 
-            }
-        }
-    }
-
+?>
+    <table>
+  <tr>
+    <th>Název</th>
+    <th>Ulice</th>
+    <th>Město</th>
+    <th>PSČ</th>
+  </tr>
+  <?php foreach ($dotaz as $radek){ ?>
+  <tr>
+    <td><?php echo $radek['cisloPopisne']; ?></td>
+    <td><?php echo $radek['ulice']; ?></td>
+    <td><?php echo $radek['mesto']; ?></td>
+    <td><?php echo $radek['PSC']; ?></td>
+  </tr>
+  <?php } ?>
+</table>
+<?php
 
 } else {
     print "co tu delas";
