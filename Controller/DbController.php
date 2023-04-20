@@ -13,10 +13,23 @@ class DbController
         Db::pripoj("localhost","root","",DATABASE_NAME);
 
     }
-    public static function getReccords(){
+    public static function getReccordsObjednavka(){
         return Db::dotazVsechny("
         SELECT * 
-        FROM adresa
+        FROM objednavka INNER JOIN adresa USING(id_adresy) 
+        INNER JOIN zpusobplatby USING(id_platby) 
+        INNER JOIN zakaznici USING(id_zakaznika);
         ");
+    }
+
+    public static function delReccordObjednavka($idObjednavky){
+        return Db::odstran("objednavka","cislo",$idObjednavky);
+
+    }
+    public static function getLastIDObjednavka(){
+        return Db::dotazJeden(
+            "SELECT MAX(cislo) 
+            FROM objednavka;
+            ");
     }
 }

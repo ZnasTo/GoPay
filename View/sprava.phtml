@@ -1,27 +1,60 @@
 <?php
 require("htmlTop.php");
 require("../Controller/DbController.php");
+
+?>
+<h1>Výpis z databáze</h1>
+<ul>
+      <li><a href="checkout.php">checkout</a></li>
+      <li><a href="../index.phtml">Hlavní Stránka</a></li>
+    </ul>
+
+    <?php
+
 // $db = mysqli_connect("localhost","root","","gopay");
 //     mysqli_set_charset($db,"utf8");
 
 
 if($_SESSION["sprava"]==1){
     DbController::connectToDb();
-    $dotaz = DbController::getReccords();
+    $dotaz = DbController::getReccordsObjednavka();
+
+    if (isset($_GET["odstranit"])) {
+      DbController::delReccordObjednavka($_GET["odstranit"]); 
+      header("Location: sprava.phtml");
+    }
 ?>
+
     <table>
   <tr>
+    <th>Číslo objednávky</th>
     <th>Název</th>
     <th>Ulice</th>
     <th>Město</th>
     <th>PSČ</th>
+    <th>Jméno</th>
+    <th>Příjmení</th>
+    <th>Email</th>
+    <th>Telefon</th>
+    <th>Způsob platby</th>
+    <th>Částka</th>
   </tr>
   <?php foreach ($dotaz as $radek){ ?>
   <tr>
-    <td><?php echo $radek['cisloPopisne']; ?></td>
-    <td><?php echo $radek['ulice']; ?></td>
-    <td><?php echo $radek['mesto']; ?></td>
-    <td><?php echo $radek['PSC']; ?></td>
+    <td><?= $radek['cislo']; ?></td>
+    <td><?= $radek['cisloPopisne']; ?></td>
+    <td><?= $radek['ulice']; ?></td>
+    <td><?= $radek['mesto']; ?></td>
+    <td><?= $radek['PSC']; ?></td>
+    <td><?= $radek['jmeno']; ?></td>
+    <td><?= $radek['prijmeni']; ?></td>
+    <td><?= $radek['email']; ?></td>
+    <td><?= $radek['telefon']; ?></td>
+    <td><?= $radek['nazev']; ?></td>
+    <td><?= $radek['castka'] . "Kč"; ?></td>
+    <td>
+    <a href="?odstranit=<?= $radek["cislo"] ?>">Odstranit</a>
+    </td>
   </tr>
   <?php } ?>
 </table>

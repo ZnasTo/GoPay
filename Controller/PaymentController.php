@@ -9,20 +9,29 @@ use GoPay\Definition\Payment\VatRate;
 use GoPay\Definition\Payment\PaymentItemType;
 
 require("../Model/PaymentInitialise.php");
-require("Controller.php");
+require("DbController.php");
 
 class PaymentController 
 {   
     private $buyerData;
+    private $lastObjednavka;
     private $response;
+    private $token;
+
+    function __construct(){
+        DbController::connectToDb();
+        $this->lastObjednavka = DbController::getLastIDObjednavka();
+  
+    }
     
 
     private function paymentCreation(){ 
         // TODO data z formuláře
-    
-       $token = PaymentInitialise::initialisePayment();
 
-       $this->response = $token->createPayment([
+    
+       $this->token = PaymentInitialise::initialisePayment();
+
+       $this->response = $this->token->createPayment([
         'payer' => [
             'default_payment_instrument' => PaymentInstrument::PAYMENT_CARD, // podle toho co zakaznik vybere
             //     'default_payment_instrument' => PaymentInstrument::BANK_ACCOUNT,
@@ -39,9 +48,9 @@ class PaymentController
                         'country_code' => 'CZE'
                 ]
         ],
-        'amount' => 139951,
+        'amount' => 123612211,
         'currency' => Currency::CZECH_CROWNS,
-        'order_number' => '001',// TODO budeme muste pomoci databaze zjistit
+        'order_number' => (int)$this->lastObjednavka + 1,
         'order_description' => 'obuv',// TODO zkusime pomazat potom
         'items' => [[ // asi uplně není pro nas podstatné
                 'type' => 'ITEM',
@@ -77,7 +86,7 @@ class PaymentController
 // ]],
         'callback' => [
                 'return_url' => 'http://localhost/GoPay/GoPay/View/checkout.php',
-                'notification_url' => 'http://www.your-url.tld/notify'
+                'notification_url' => 'http://www.your-url.tld/notify' //hodne zajimava vec, sendne se kdykoli je status objednávky updatován
         ],
         'lang' => Language::CZECH
 
@@ -105,9 +114,13 @@ class PaymentController
             return 'error '.  print $this->response->statusCode;
 
     }
+    }
 
+    public function getStatus($statusID){
+        return $this->token->getStatus($statusID);
 
     }
+
 
 
 }
