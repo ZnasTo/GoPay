@@ -51,7 +51,7 @@ class PaymentController
         'amount' => 123612211,
         'currency' => Currency::CZECH_CROWNS,
         'order_number' => $this->cisloObjednavky,
-    // 'order_description' => 'obuv',// TODO zkusime pomazat potom
+    // 'order_description' => 'obuv',
     // 'items' => [[ // asi uplně není pro nas podstatné
     //         'type' => 'ITEM',
     //         'name' => 'obuv',
