@@ -14,13 +14,13 @@ require("DbController.php");
 class PaymentController 
 {   
     private $buyerData;
-    private $lastObjednavka;
+    private $cisloObjednavky;
     private $response;
     private $token;
 
     function __construct(){
         DbController::connectToDb();
-        $this->lastObjednavka = DbController::getLastIDObjednavka();
+        $this->cisloObjednavky = (int)DbController::getLastIDObjednavka() + 1;
   
     }
     
@@ -28,12 +28,12 @@ class PaymentController
     private function paymentCreation(){ 
         // TODO data z formuláře
 
-    
+        
        $this->token = PaymentInitialise::initialisePayment();
 
        $this->response = $this->token->createPayment([
         'payer' => [
-            'default_payment_instrument' => PaymentInstrument::PAYMENT_CARD, // podle toho co zakaznik vybere
+            'default_payment_instrument' => PaymentInstrument::PAYMENT_CARD, 
             //     'default_payment_instrument' => PaymentInstrument::BANK_ACCOUNT,
             'allowed_payment_instruments' => [PaymentInstrument::BANK_ACCOUNT,PaymentInstrument::PAYMENT_CARD,PaymentInstrument::BITCOIN],
             //     'default_swift' => BankSwiftCode::FIO_BANKA,
@@ -50,26 +50,26 @@ class PaymentController
         ],
         'amount' => 123612211,
         'currency' => Currency::CZECH_CROWNS,
-        'order_number' => (int)$this->lastObjednavka + 1,
-        'order_description' => 'obuv',// TODO zkusime pomazat potom
-        'items' => [[ // asi uplně není pro nas podstatné
-                'type' => 'ITEM',
-                'name' => 'obuv',
-                'product_url' => 'https://www.eshop.cz/boty/lodicky',
-                'ean' => 1234567890123,
-                'amount' => 119990,
-                'count' => 1,
-                'vat_rate' => VatRate::RATE_4
-        ],
-                [
-                'type' => PaymentItemType::ITEM,
-                'name' => 'oprava podpatku',
-                'product_url' => 'https://www.eshop.cz/boty/opravy',
-                'ean' => 1234567890189,
-                'amount' => 19961,
-                'count' => 1,
-                'vat_rate' => VatRate::RATE_3
-                ]],
+        'order_number' => $this->cisloObjednavky,
+    // 'order_description' => 'obuv',// TODO zkusime pomazat potom
+    // 'items' => [[ // asi uplně není pro nas podstatné
+    //         'type' => 'ITEM',
+    //         'name' => 'obuv',
+    //         'product_url' => 'https://www.eshop.cz/boty/lodicky',
+    //         'ean' => 1234567890123,
+    //         'amount' => 119990,
+    //         'count' => 1,
+    //         'vat_rate' => VatRate::RATE_4
+    // ],
+    //         [
+    //         'type' => PaymentItemType::ITEM,
+    //         'name' => 'oprava podpatku',
+    //         'product_url' => 'https://www.eshop.cz/boty/opravy',
+    //         'ean' => 1234567890189,
+    //         'amount' => 19961,
+    //         'count' => 1,
+    //         'vat_rate' => VatRate::RATE_3
+    //         ]],
     // EET bylo v česku zrušeno
     // ----------------------------------------
     //     'eet' => [
