@@ -40,7 +40,7 @@ class PaymentController
             'allowed_swifts' => [BankSwiftCode::FIO_BANKA, BankSwiftCode::MBANK],
                 'contact' => ['first_name' => 'Zbynek',
                         'last_name' => 'Zak',
-                        'email' => 'testovaciEmail@test.cz',
+                        'email' => 'testovaciEmail1@test.cz',
                         'phone_number' => '+420777456123',
                         'city' => 'C.Budejovice',
                         'street' => 'Plana 67',
@@ -86,7 +86,7 @@ class PaymentController
 // ]],
         'callback' => [
                 'return_url' => 'http://localhost/GoPay/GoPay/View/checkout.php',
-                'notification_url' => 'http://www.your-url.tld/notify' //hodne zajimava vec, sendne se kdykoli je status objednávky updatován
+                // 'notification_url' => 'http://localhost/GoPay/GoPay/Controller/NotifyController.php' //hodne zajimava vec, sendne se kdykoli je status objednávky updatován
         ],
         'lang' => Language::CZECH
 
@@ -108,9 +108,7 @@ class PaymentController
                 
     }
     else {
-        // TODO posle ho na error view
-        // TODO nikam ho nepresmeruje nebo (vratiho na tu stranku)
-        // return "url te stranky treba"
+        
             return 'error '.  print $this->response->statusCode;
 
     }
