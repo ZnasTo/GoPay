@@ -17,6 +17,7 @@ class PaymentController
     private $cisloObjednavky;
     private $response;
     private $token;
+    private $returnURL;
 
     function __construct(){
         DbController::connectToDb();
@@ -85,7 +86,8 @@ class PaymentController
 //         'value' => '2015001003'
 // ]],
         'callback' => [
-                'return_url' => 'http://localhost/GoPay/GoPay/View/checkout.php',
+                // 'return_url' => 'http://localhost/GoPay/GoPay/View/checkout.php',
+                'return_url' => $this->returnURL,
                 // 'notification_url' => 'http://localhost/GoPay/GoPay/Controller/NotifyController.php' //hodne zajimava vec, sendne se kdykoli je status objednávky updatován
         ],
         'lang' => Language::CZECH
@@ -97,8 +99,9 @@ class PaymentController
     
     }
 
-    function getGoPayUrl($buyerData){
+    function getGoPayUrl($buyerData, $returnURL){
         $this->buyerData = $buyerData;
+        $this->returnURL = $returnURL;
         $this->paymentCreation();
 
 

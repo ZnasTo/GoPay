@@ -13,7 +13,9 @@
     </nav>
     <?php
     $pc = new PaymentController;
-    $url = $pc->getGoPayUrl("zde prijdou data");
+    $current_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $url = $pc->getGoPayUrl("zde prijdou data",$current_url);
+    
     $cisloObjednavky = 123; // tu ulozis cislo objednavky
     // print $url;
     if(isset($_GET["id"])){
