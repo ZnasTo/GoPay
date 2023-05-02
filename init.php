@@ -1,15 +1,18 @@
 <?php
 session_start();
+function autoloader($className) {
+    if (str_ends_with($className, "Controller")) {
+        require "Controller/$className.php";
+    }
+    else {
+        require "Model/$className.php";
+    }
+}
+// pokud se v kodu obejvi trida ktera jeste nebyla nactena
+//spl_autoload_register se ji pokusi nacist
+//tudiz nemusime vsude davat require
+spl_autoload_register("autoloader"); 
 
+
+Db::pripoj("localhost", "root", "", "gopay");
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
-</head>
