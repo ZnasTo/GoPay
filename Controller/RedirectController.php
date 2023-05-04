@@ -7,7 +7,8 @@ class RedirectController extends Controller {
         
         $url = $parameters[0];
         $partsOfPath = $this->parseURL($url);
-        if (!empty($partsOfPath[0])) { // upravene
+        
+        if (!empty($partsOfPath[0])) {
             $controllerNameHalf = $this->toCamelNotation(array_shift($partsOfPath));
             $controllerName = $controllerNameHalf . "Controller";
             if (file_exists("Controller/$controllerName.php")) {
@@ -16,7 +17,8 @@ class RedirectController extends Controller {
                 $this->view = "htmlBase";
             }
             else {
-               $this->redirect("error"); 
+                print $partsOfPath[0];
+            //    $this->redirect("error"); 
             }
         }
         else {

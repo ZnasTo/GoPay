@@ -1,12 +1,11 @@
 <?php
 
 abstract class Controller {
-    protected $view;
+    protected $view = "";
 
     protected $data = [];
 
     abstract public function execute($parameters);
-
 
     public function printView(){
         extract($this->data);
@@ -14,7 +13,7 @@ abstract class Controller {
     }
 
     public function redirect($url){
-        header("Location: /$url");
+        header("Location:/$url");
         exit;
     }
 

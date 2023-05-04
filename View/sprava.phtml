@@ -1,29 +1,5 @@
-<?php
-require("htmlTop.php");
-require("../Controller/DbController.php");
 
-?>
 <h1>Výpis z databáze</h1>
-<ul>
-      <li><a href="checkout.php">checkout</a></li>
-      <li><a href="../index.phtml">Hlavní Stránka</a></li>
-    </ul>
-
-    <?php
-
-// $db = mysqli_connect("localhost","root","","gopay");
-//     mysqli_set_charset($db,"utf8");
-
-
-if($_SESSION["sprava"]==1){
-    DbController::connectToDb();
-    $dotaz = DbController::getReccordsObjednavka();
-
-    if (isset($_GET["odstranit"])) {
-      DbController::delReccordObjednavka($_GET["odstranit"]); 
-      header("Location: sprava.phtml");
-    }
-?>
 
     <table>
   <tr>
@@ -58,14 +34,3 @@ if($_SESSION["sprava"]==1){
   </tr>
   <?php } ?>
 </table>
-<?php
-
-} else {
-    print "co tu delas";
-}
-
-
-
-
-require("htmlBottom.html");
-?>

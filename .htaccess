@@ -5,7 +5,6 @@ Options -Indexes
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule !\.(pdf|js|ico|gif|jpg|png|css|rar|zip)$ index.phtml [L]
+RewriteRule !\.(pdf|js|ico|gif|jpg|png|css|rar|zip)$ index.php [L]
 
 AddType application/x-httpd-php .php .phtml
-#AddType text/html .php .phtml

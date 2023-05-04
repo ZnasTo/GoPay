@@ -1,21 +1,4 @@
 
-<?php
-
-require("htmlTop.php");
-    
-    
-?>
-<nav>
-      <ul>
-      <li><a href="checkout.php">checkout</a></li>
-        <li><a href="../index.phtml">Hlavní Stránka</a></li>
-      </ul>
-
-    </nav>
-    
-
-
-
 <h2>vítej ve spravě databáze</h2>
 <form  method="post">
     <input type="password" name="heslo" id="heslo">
@@ -24,21 +7,6 @@ require("htmlTop.php");
     <input type="submit" value="Prihlasit se">
 
 </form>
-
-<?php
-if(isset($_POST["heslo"])){
-    if(strcmp($_POST["heslo"],"th0") == 0){
-        $_SESSION["sprava"] = 1;
-        header("Location: sprava.phtml");
-    }
-}
-
-
-
-
-
-require("htmlBottom.html");
-?>
 
 
 

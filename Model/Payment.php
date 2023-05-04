@@ -1,5 +1,10 @@
+
 <?php
 
+define("GO_ID","8565283375");
+define("CLIENT_ID","1167493503");
+define("CLIENT_SECERET","aeNk74bQ");
+define("URL_PRODEJNIHO_MISTA","http://www.ales.recman.cz");
 
 use GoPay\Definition\Language;
 use GoPay\Definition\Payment\Currency;
@@ -8,29 +13,51 @@ use GoPay\Definition\Payment\BankSwiftCode;
 use GoPay\Definition\Payment\VatRate;
 use GoPay\Definition\Payment\PaymentItemType;
 
-require("../Model/PaymentInitialise.php");
-require("DbController.php");
-
-class PaymentController 
+require("vendor/autoload.php");
+class Payment
 {   
+
     private $buyerData;
     private $cisloObjednavky;
     private $response;
     private $token;
     private $returnURL;
 
-    function __construct(){
-        DbController::connectToDb();
-        $this->cisloObjednavky = (int)DbController::getLastIDObjednavka() + 1;
-  
-    }
-    
 
-    private function paymentCreation(){ 
+    function __construct(){
+
+        $this->cisloObjednavky = intval(Db::dotazJeden(
+            "SELECT MAX(cislo) 
+            FROM objednavka;
+            ")) + 1;
+    }
+
+    
+    public function getGoPayUrl($buyerData, $returnURL){
+        $this->buyerData = $buyerData;
+        $this->returnURL = $returnURL;
+        $this->createPayment();
+
+
+    if($this->response->hasSucceed()){
+            // print $this->response->json['gw_url'];
+            return $this->response->json['gw_url'];        
+    }
+    else{   
+            return 'error '.  print $this->response->statusCode;
+        }
+    }
+
+    public function getStatus($statusID){
+        return $this->token->getStatus($statusID);
+
+    }
+
+    private function createPayment(){ 
         // TODO data z formuláře
 
         
-       $this->token = PaymentInitialise::initialisePayment();
+       $this->initialisePayment();
 
        $this->response = $this->token->createPayment([
         'payer' => [
@@ -82,9 +109,9 @@ class PaymentController
     //             'mena' => Currency::CZECH_CROWNS
     //     ],
     // ----------------------------------------
-// 'additional_params' => [['name' => 'invoicenumber',
-//         'value' => '2015001003'
-// ]],
+    // 'additional_params' => [['name' => 'invoicenumber',
+    //         'value' => '2015001003'
+    // ]],
         'callback' => [
                 // 'return_url' => 'http://localhost/GoPay/GoPay/View/checkout.php',
                 'return_url' => $this->returnURL,
@@ -93,35 +120,25 @@ class PaymentController
         'lang' => Language::CZECH
 
     ]);
-
-
+    
+    
+    
+    
+}
+private function initialisePayment(){
+    $this->token = (
+        GoPay\payments([
+            'goid' => GO_ID,
+            'clientId' => CLIENT_ID,
+            'clientSecret' => CLIENT_SECERET,
+            'gatewayUrl' => 'https://gw.sandbox.gopay.com/',
+            'scope' => GoPay\Definition\TokenScope::ALL,
+            'language' => GoPay\Definition\Language::CZECH,
+            'timeout' => 30
+        ])
+        );
+}
 
     
-    }
-
-    function getGoPayUrl($buyerData, $returnURL){
-        $this->buyerData = $buyerData;
-        $this->returnURL = $returnURL;
-        $this->paymentCreation();
-
-
-    if($this->response->hasSucceed()){
-            // print $this->response->json['gw_url'];
-            return $this->response->json['gw_url'];
-                
-    }
-    else {
-        
-            return 'error '.  print $this->response->statusCode;
-
-    }
-    }
-
-    public function getStatus($statusID){
-        return $this->token->getStatus($statusID);
-
-    }
-
-
-
 }
+

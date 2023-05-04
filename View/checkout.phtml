@@ -1,22 +1,10 @@
 
-<?php
-    require("htmlTop.php");
-
-    require_once("../Controller/PaymentController.php");
-    ?>
-    <nav>
-      <ul>
-      <li><a href="checkout.php">checkout</a></li>
-        <li><a href="../index.phtml">Hlavní Stránka</a></li>
-      </ul>
-
-    </nav>
     <?php
-    $pc = new PaymentController;
+    // $pc = new PaymentController;
     $current_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $url = $pc->getGoPayUrl("zde prijdou data",$current_url);
     
-    $cisloObjednavky = 123; // tu ulozis cislo objednavky
+    // $cisloObjednavky = 123; // tu ulozis cislo objednavky
     // print $url;
     if(isset($_GET["id"])){
       $response = $pc->getStatus($_GET["id"]);
@@ -54,5 +42,5 @@
 
     ?>
 <?php
-require("htmlBottom.html");
+
 ?>

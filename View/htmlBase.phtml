@@ -12,12 +12,15 @@
     <nav>
         <ul>
             <li><a href="uvod">Úvod</a></li>
-            <li><a href="sprava">Body</a></li>
+            <li><a href="login">Správa</a></li>
+            <li><a href="zaplatit">Zaplatit</a></li>
         </ul>
     </nav>
 
     <div >
-        <?php foreach ($messsages as $message) { ?>
+        <?php 
+        if(isset($messsages))
+        foreach ($messsages as $message) { ?>
             <p class="<?= $message["type"] ?>">
                 <?= $message["message"] ?>
             </p>
@@ -28,6 +31,6 @@
         $this->controller->printView();
         
    ?>
-   fsfdsfddfs
+   
 </body>
 </html>
