@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Počítač: 127.0.0.1
--- Vytvořeno: Pát 28. dub 2023, 13:04
--- Verze serveru: 10.4.22-MariaDB
--- Verze PHP: 8.1.1
+-- Vytvořeno: Stř 07. čen 2023, 10:32
+-- Verze serveru: 10.4.24-MariaDB
+-- Verze PHP: 8.0.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Databáze: `gopay`
+-- Databáze: `oprava`
 --
 
 -- --------------------------------------------------------
@@ -51,9 +51,9 @@ INSERT INTO `adresa` (`mesto`, `cisloPopisne`, `ulice`, `PSC`, `id_adresy`) VALU
 
 CREATE TABLE `objednavka` (
   `cislo` int(11) NOT NULL,
-  `id_adresy` int(11) NOT NULL,
-  `id_platby` int(11) NOT NULL,
-  `id_zakaznika` int(11) NOT NULL,
+  `id_adresy` int(11) DEFAULT NULL,
+  `id_platby` int(11) DEFAULT NULL,
+  `id_zakaznika` int(11) DEFAULT NULL,
   `castka` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
