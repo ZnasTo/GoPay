@@ -1,29 +1,35 @@
 <?php 
 class SpravaController extends Controller{
     public function execute($parameters){
-        $redirect = new RedirectController;
-
+        
+        // $this->redirect("upravit");
         if($_SESSION["sprava"]==1){
             
-            $dotaz = Db::dotazVsechny("
-            // SELECT * 
-            // FROM objednavka INNER JOIN adresa USING(id_adresy) 
-            // INNER JOIN zpusobplatby USING(id_platby) 
-            // INNER JOIN zakaznici USING(id_zakaznika);
+            $transakce = Db::dotazVsechny(" SELECT *
+            FROM transakce;
             ");
         
             if (isset($_GET["odstranit"])) {
-                $idObjednavky = $_GET["odstranit"];
-                Db::odstran("objednavka","cislo",$idObjednavky);; 
-                $redirect->redirect("sprava");
+                $idTransakce = $_GET["odstranit"];
+                Db::odstran("transakce","id_transakce",$idTransakce);; 
+                $this->redirect("sprava");
             }
-            $this->data["dotaz"] = $dotaz;
+            $this->data["transakce"] = $transakce;
             $this->view = "sprava";
+            
+            if (isset($_GET["upravit"])) {
+                $idTransakce = $_GET["upravit"];
+                // $_POST["neco"] = "neco";
+                $this->redirect("upravit?id_transakce=$idTransakce");
+            }
+            
         }
         else{
-            $redirect->redirect("login");
-
+            $this->redirect("login");
+            
+            
         }
+        
     }
 
 

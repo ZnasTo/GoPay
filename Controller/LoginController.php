@@ -1,11 +1,16 @@
 <?php
-
+// TODO pokud je prihlaseny, nechtej po nem heslo\
+//TODO odhlaseni
 class LoginController extends Controller{
     
     
     public function execute($parameters)
-    {
+    {   
         
+        // if($_SESSION["sprava"]==1){
+        //     $this->redirect("sprava");
+        // }
+
         $this->view = "login";
 
         //zprava pro uzivatele, kdyz zada neco spatne
