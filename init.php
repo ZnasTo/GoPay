@@ -16,5 +16,5 @@ spl_autoload_register("autoloader");
 //tudiz nemusime vsude davat require
 
 
-Db::pripoj("localhost", "root", "", "gopay");
+Db::pripoj("localhost", "root", "", "mp_gopay");
 ?>
