@@ -6,10 +6,10 @@ class SpravaController extends Controller{
         if($_SESSION["sprava"]==1){
             
             $dotaz = Db::dotazVsechny("
-            SELECT * 
-            FROM objednavka INNER JOIN adresa USING(id_adresy) 
-            INNER JOIN zpusobplatby USING(id_platby) 
-            INNER JOIN zakaznici USING(id_zakaznika);
+            // SELECT * 
+            // FROM objednavka INNER JOIN adresa USING(id_adresy) 
+            // INNER JOIN zpusobplatby USING(id_platby) 
+            // INNER JOIN zakaznici USING(id_zakaznika);
             ");
         
             if (isset($_GET["odstranit"])) {

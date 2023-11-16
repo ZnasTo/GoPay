@@ -1,10 +1,22 @@
 
 <h2>vítej ve spravě databáze</h2>
 <form  method="post">
-    <input type="password" name="heslo" id="heslo">
+    <input type="text" name="jmeno" id="jmeno" required>
+    <label for="jmeno">zadej jmeno</label>
+
+    <input type="password" name="heslo" id="heslo" required>
     <label for="heslo">zadej heslo</label>
 
     <input type="submit" value="Prihlasit se">
+    <p></p>
+    <?php
+    // if(isset($this->data["error"]))
+    if(strlen($this->data["error"]) != 0){
+        ?>
+        <p><?=$this->data["error"]?></p>
+        <?php
+    }
+    ?>
 
 </form>
 

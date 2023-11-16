@@ -27,8 +27,8 @@ class Payment
     function __construct(){
 
         $this->cisloObjednavky = intval(Db::dotazJeden(
-            "SELECT MAX(cislo) 
-            FROM objednavka;
+            "SELECT MAX(id_transakce) 
+            FROM transakce;
             ")) + 1;
     }
 
