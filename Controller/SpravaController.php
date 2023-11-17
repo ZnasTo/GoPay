@@ -1,9 +1,13 @@
 <?php 
 class SpravaController extends Controller{
     public function execute($parameters){
-        
+
         // $this->redirect("upravit");
         if($_SESSION["sprava"]==1){
+
+            if(isset($_POST["upravit"])){
+                print("ahoj");
+            }
             
             $transakce = Db::dotazVsechny(" SELECT *
             FROM transakce;

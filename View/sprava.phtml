@@ -48,8 +48,8 @@ date_default_timezone_set('Europe/Prague');
     <td><?=date("j.n.Y H:i:s", strtotime($radek['cas_zaplaceni'])); ?></td>
 
     <td>
-    <a href="sprava?odstranit=<?=$radek["id_transakce"] ?>">Odstranit</a>
-    <a href="sprava?upravit=<?= $radek["id_transakce"] ?>">Upravit</a>
+    <a href="<?=$this->view?>?odstranit=<?=$radek["id_transakce"] ?>">Odstranit</a>
+    <a href="<?=$this->view?>?upravit=<?= $radek["id_transakce"] ?>">Upravit</a>
     </td>
   </tr>
   <?php } ?>

@@ -17,8 +17,8 @@ class LoginController extends Controller{
         $this->data["error"] = "";
         
 
-        // $hashnuteHeslo = password_hash("test", PASSWORD_BCRYPT); // hashnuti hesla
-        // print($hashnuteHeslo);
+        $hashnuteHeslo = password_hash("test", PASSWORD_BCRYPT); // hashnuti hesla
+        print($hashnuteHeslo);
         if(isset($_POST["jmeno"]) && isset($_POST["heslo"])){
             $jmeno = $_POST['jmeno'];
             $heslo = $_POST['heslo'];
