@@ -3,7 +3,7 @@ class SpravaController extends Controller{
     public function execute($parameters){
 
         // $this->redirect("upravit");
-        if($_SESSION["sprava"]==1){
+        if($_SESSION["prihlasen"]== true){
 
             if(isset($_POST["upravit"])){
                 print("ahoj");

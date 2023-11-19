@@ -4,17 +4,37 @@ class UpravitController extends Controller
 {
     public function execute($parameters){
        
-        if($_SESSION["sprava"]==1){
+        if($_SESSION["prihlasen"]==true){
             $this->view = "upravit";
             
             if(isset($_POST["jmeno"])){
-                //TODO dodealt insert... platebni metody, zda bylo zaplaceno, cas vytvoreni (jesli je zaplaceno, dej now)
-                Db::dotaz("UPDATE transakce WHERE id_transakce = '$_POST[id_transakce]'
-                VALUES ('$_POST[id_transakce]','$_POST[oddeleni]','$_POST[jmeno]','$_POST[prijmeni]','$_POST[email]',
-                '$_POST[telefon]','$_POST[mesto]','$_POST[ulice]','$_POST[CP]','$_POST[PSC]','$_POST[castka]','CARD',true,
-                '$_POST[cas_vytvoreni]','2011-12-18 13:17:17')"
-            
-            );
+
+                $zaplaceno = 1;
+                $cas_zaplaceni = "";
+
+                if($_POST["zaplaceno"]== 0){
+                    $zaplaceno = 0;
+                    $cas_zaplaceni = ",cas_zaplaceni = NULL ";
+                }
+                if($_POST["cas_zaplaceni"] == "" && $zaplaceno){
+                    $cas_zaplaceni = ",cas_zaplaceni = NOW() ";  
+                }
+
+                //TODO mozna validaci, aby nesel sql injection attack
+                //upraveni dat v databazi
+                Db::dotaz("UPDATE transakce
+                SET oddeleni = '$_POST[oddeleni]',jmeno = '$_POST[jmeno]',prijmeni ='$_POST[prijmeni]',email ='$_POST[email]',
+                telefon ='$_POST[telefon]',mesto = '$_POST[mesto]',ulice ='$_POST[ulice]',CP='$_POST[CP]',PSC = '$_POST[PSC]',castka ='$_POST[castka]',zpusob_platby = '$_POST[zpusob_platby]',zaplaceno = $zaplaceno 
+                " . $cas_zaplaceni . "
+                WHERE id_transakce = '$_POST[id_transakce]'");
+
+                // Db::dotaz("UPDATE transakce
+                // SET id_transakce = '$_POST[id_transakce]',oddeleni = '$_POST[oddeleni]',jmeno = '$_POST[jmeno]'
+                // WHERE id_transakce = 3");
+
+
+                // Db::dotaz("UPDATE transakce
+                // SET oddeleni = 'fakturacni'");
             }
 
             
@@ -30,22 +50,22 @@ class UpravitController extends Controller
             $this->data["transakce"]["cas_vytvoreni"] = date("j.n.Y H:i:s", strtotime($this->data["transakce"]["cas_vytvoreni"]));
            
            //kontrola jestli element existuje (neni v databazi zapsano NULL)
-            if(isset($this->data["transakce"]["caz_zaplaceni"])){
-                
-                $this->data["transakce"]["caz_zaplaceni"] = "";
+            if(isset($this->data["transakce"]["cas_zaplaceni"]) == null){
+
+                $this->data["transakce"]["cas_zaplaceni"] = "";
             }else{
                 $this->data["transakce"]["cas_zaplaceni"] = date("j.n.Y H:i:s", strtotime($this->data["transakce"]["cas_zaplaceni"]));
             }
 
-            //nastaveni hodnoty do selectu
+            //nastaveni selected hodnoty do selectu
             if($this->data["transakce"]["zaplaceno"]){
                 $this->data["transakce"]["zaplaceno"] = "
-                <option value='1'>Ano</option>
                 <option value='0'>Ne</option>
+                <option value='1' selected>Ano</option>
                 ";
             } else {
                 $this->data["transakce"]["zaplaceno"] = "
-                <option value='0'>Ne</option>
+                <option value='0' selected>Ne</option>
                 <option value='1'>Ano</option>
                 ";
             }

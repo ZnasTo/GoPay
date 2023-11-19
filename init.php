@@ -14,6 +14,8 @@ spl_autoload_register("autoloader");
 // pokud se v kodu obejvi trida ktera jeste nebyla nactena
 //spl_autoload_register se ji pokusi nacist
 //tudiz nemusime vsude davat require
+if(!isset($_SESSION["prihlasen"]))
+    $_SESSION["prihlasen"] = false;
 
 
 Db::pripoj("localhost", "root", "", "mp_gopay");

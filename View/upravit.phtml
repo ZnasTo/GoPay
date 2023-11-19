@@ -1,8 +1,8 @@
 <!-- TODO values nahaze do tohodle formulare -->
 <form method="POST" action="upravit">
 
-    <label for="ID">ID: </label>
-    <input type="number" name="ID" id="ID" value="<?=$this->data["transakce"]["id_transakce"]?>" required readonly><br>
+    <label for="id_transakce">ID: </label>
+    <input type="number" name="id_transakce" id="id_transakce" value="<?=$this->data["transakce"]["id_transakce"]?>" required readonly><br>
     
     <label for="oddeleni">Oddělení: </label>
     <input type="text" name="oddeleni" id="oddeleni" value="<?=$this->data["transakce"]["oddeleni"]?>" required><br>
@@ -35,18 +35,19 @@
     <input type="text" name="zpusob_platby" id="zpusob_platby"value="<?=$this->data["transakce"]["zpusob_platby"]?>"><br>
     <label for="zaplaceno">Zaplaceno: </label>
 
-    <Select name="zaplaceno" id="zaplaceno" required >
-        <?=$this->data["transakce"]["zaplaceno"]?>
+    <Select name="zaplaceno" id="zaplaceno"  required >
+                <?=$this->data["transakce"]["zaplaceno"]?>
     </Select>
 
-    <label for="Čas vytvoření">Čas Vytvoření: </label>
-    <input type="datetime" name="zpusob_platby" id="zpusob_platby" value="<?=$this->data["transakce"]["cas_vytvoreni"]?>" required readonly><br>
+    <label for="cas_vytvoreni">Čas Vytvoření: </label>
+    <input type="text" name="cas_vytvoreni" id="cas_vytvoreni" value="<?=$this->data["transakce"]["cas_vytvoreni"]?>" required readonly><br>
 
 
-    <label for="Čas vytvoření">Čas Zaplacení: </label>
-    <input type="datetime" name="zpusob_platby" id="zpusob_platby" value="<?=$this->data["transakce"]["cas_vytvoreni"]?>" readonly><br>
+    <label for="cas_zaplaceni">Čas Zaplacení: </label>
+    <input type="text" name="cas_zaplaceni" id="cas_zaplaceni" value="<?=$this->data["transakce"]["cas_zaplaceni"]?>" readonly><br>
 
-    
+
+
     <button href="sprava">Zpět</button>
     <button type="submit">Změnit</button>
 </form>
