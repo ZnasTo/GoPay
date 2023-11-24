@@ -1,0 +1,21 @@
+<form method="get" action="zaplatit">
+    <fieldset>
+        <legend>Zakladní informace</legend>
+        <label for="first_name">Jméno: </label><input type="text" name="first_name" id="first_name"><br>
+        <label for="last_name">Příjmení: </label><input type="text" name="last_name" id="last_name"><br>
+        <label for="email">Email: </label><input type="email" name="email" id="email"><br>
+        <label for="phone_number">Telefonní číslo: </label><input type="tel" name="phone_number" id="phone_number">
+    </fieldset>
+    <fieldset>
+        <legend>Adresa</legend>
+        <label for="street">Ulice: </label><input type="text" name="street" id="street"><br>
+        <label for="city">Město: </label><input type="text" name="city" id="city"><br>
+        <label for="postal_code">PSČ: </label><input type="number" name="postal_code" id="postal_code">
+    </fieldset>
+    <fieldset>
+        <legend>Penize</legend>
+        <label for="amount">Částka: </label><input type="number" name="amount" id="amount" required><br>
+    </fieldset>
+
+    <button type="submit">Pokracovat</button>
+</form>
