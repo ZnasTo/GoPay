@@ -1,5 +1,0 @@
-{
-    "require": {
-        "gopay/payments-sdk-php": "^1.6"
-    }
-}
