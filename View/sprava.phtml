@@ -3,54 +3,63 @@ date_default_timezone_set('Europe/Prague');
 ?>
 
 
-<h1>Výpis z databáze</h1>
+<h1 class="text-center pt-3 pb-3">Správa transakcí</h1>
+  
 
-    <table>
-  <tr>
-    <th>Číslo transakce</th>
-    <th>Oddělení</th>
-    <th>Jméno</th>
-    <th>Příjmení</th>
-    <th>Email</th>
-    <th>Telefon</th>
-    <th>Město</th>
-    <th>Ulice</th>
-    <th>Číslo popisné</th>
-    <th>PSČ</th>
-    <th>Způsob platby</th>
-    <th>Částka</th>
-    <th>Zaplaceno</th>
-    <th>Čas vytvoření</th>
-    <th>Čas zaplaceni</th>
-  </tr>
-  <?php foreach ($transakce as $radek){ ?>
-  <tr>
-    <td><?= $radek['id_transakce']; ?></td>
-    <td><?= $radek['oddeleni']; ?></td>
-    <td><?= $radek['jmeno']; ?></td>
-    <td><?= $radek['prijmeni']; ?></td>
-    <td><?= $radek['email']; ?></td>
-    <td><?= $radek['telefon']; ?></td>
-    <td><?= $radek['mesto']; ?></td>
-    <td><?= $radek['ulice']; ?></td>
-    <td><?= $radek['CP']; ?></td>
-    <td><?= $radek['PSC']; ?></td>
-    <td><?= $radek['zpusob_platby']; ?></td>
-    <td><?= $radek['castka'] . "Kč"; ?></td>
-    <td><?php
-    if($radek['zaplaceno'] == true){
-      echo 'Ano';
-    } else {
-      echo 'Ne';
-    } 
-    ?></td>
-    <td><?=date("j.n.Y H:i:s", strtotime($radek['cas_vytvoreni'])); ?></td>
-    <td><?php if($radek["cas_zaplaceni"] != NULL) echo(date("j.n.Y H:i:s", strtotime($radek['cas_zaplaceni']))); ?></td>
+  <table class="table  table-responsive fixed-table-body table-striped table-sm">
+  <thead class="table-dark">
+    <tr>
 
-    <td>
-    <a href="<?=$this->view?>?odstranit=<?=$radek["id_transakce"] ?>">Odstranit</a>
-    <a href="<?=$this->view?>?upravit=<?= $radek["id_transakce"] ?>">Upravit</a>
-    </td>
-  </tr>
-  <?php } ?>
+      <th>Číslo transakce</th>
+      <th>Oddělení</th>
+      <th>Jméno</th>
+      <th>Příjmení</th>
+      <th>Email</th>
+      <th>Telefon</th>
+      <th>Město</th>
+      <th>Ulice</th>
+      <th>Číslo popisné</th>
+      <th>PSČ</th>
+      <th>Způsob platby</th>
+      <th>Částka</th>
+      <th>Zaplaceno</th>
+      <th>Čas vytvoření</th>
+      <th>Čas zaplaceni</th>
+      <th></th>
+    </tr>
+
+  </thead>
+  <tbody>
+
+    <?php foreach ($transakce as $radek){ ?>
+    <tr>
+      <td><?= $radek['id_transakce']; ?></td>
+      <td><?= $radek['oddeleni']; ?></td>
+      <td><?= $radek['jmeno']; ?></td>
+      <td><?= $radek['prijmeni']; ?></td>
+      <td><?= $radek['email']; ?></td>
+      <td><?= $radek['telefon']; ?></td>
+      <td><?= $radek['mesto']; ?></td>
+      <td><?= $radek['ulice']; ?></td>
+      <td><?= $radek['CP']; ?></td>
+      <td><?= $radek['PSC']; ?></td>
+      <td><?= $radek['zpusob_platby']; ?></td>
+      <td><?= $radek['castka'] . "Kč"; ?></td>
+      <td><?php
+      if($radek['zaplaceno'] == true){
+        echo 'Ano';
+      } else {
+        echo 'Ne';
+      } 
+      ?></td>
+      <td><?=date("j.n.Y H:i:s", strtotime($radek['cas_vytvoreni'])); ?></td>
+      <td><?php if($radek["cas_zaplaceni"] != NULL) echo(date("j.n.Y H:i:s", strtotime($radek['cas_zaplaceni']))); ?></td>
+  
+      <td>
+      <a href="<?=$this->view?>?odstranit=<?=$radek["id_transakce"] ?>">Odstranit</a>
+      <a href="<?=$this->view?>?upravit=<?= $radek["id_transakce"] ?>">Upravit</a>
+      </td>
+    </tr>
+    <?php } ?>
+  </tbody>
 </table>

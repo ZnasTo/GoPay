@@ -9,6 +9,8 @@ class UpravitController extends Controller
             
             if(isset($_POST["jmeno"])){
 
+                
+
                 $zaplaceno = 1;
                 $cas_zaplaceni = "";
 
@@ -22,52 +24,55 @@ class UpravitController extends Controller
 
                 //TODO mozna validaci, aby nesel sql injection attack
                 //upraveni dat v databazi
-                Db::dotaz("UPDATE transakce
-                SET oddeleni = '$_POST[oddeleni]',jmeno = '$_POST[jmeno]',prijmeni ='$_POST[prijmeni]',email ='$_POST[email]',
-                telefon ='$_POST[telefon]',mesto = '$_POST[mesto]',ulice ='$_POST[ulice]',CP='$_POST[CP]',PSC = '$_POST[PSC]',castka ='$_POST[castka]',zpusob_platby = '$_POST[zpusob_platby]',zaplaceno = $zaplaceno 
-                " . $cas_zaplaceni . "
-                WHERE id_transakce = '$_POST[id_transakce]'");
-
                 // Db::dotaz("UPDATE transakce
-                // SET id_transakce = '$_POST[id_transakce]',oddeleni = '$_POST[oddeleni]',jmeno = '$_POST[jmeno]'
-                // WHERE id_transakce = 3");
+                // SET oddeleni = '$_POST[oddeleni]',jmeno = '$_POST[jmeno]',prijmeni ='$_POST[prijmeni]',email ='$_POST[email]',
+                // telefon ='$_POST[telefon]',mesto = '$_POST[mesto]',ulice ='$_POST[ulice]',CP='$_POST[CP]',PSC = '$_POST[PSC]',castka ='$_POST[castka]',zpusob_platby = '$_POST[zpusob_platby]',zaplaceno = $zaplaceno 
+                // " . $cas_zaplaceni . "
+                // WHERE id_transakce = '$_POST[id_transakce]'");
 
-
-                // Db::dotaz("UPDATE transakce
-                // SET oddeleni = 'fakturacni'");
+                print Formular::kontrolaDat($_POST);
             }
 
             
             //overujeme ze je zadane id
-            if(!isset($_GET["id_transakce"]))
-                $this->redirect("sprava");
+            if (isset($_GET["id_transakce"])) {
 
-            //ziskani informaci o transakci
-            $this->data["transakce"] = Db::dotazJeden("SELECT *
-            FROM transakce
-            WHERE id_transakce = $_GET[id_transakce]");
-
-            $this->data["transakce"]["cas_vytvoreni"] = date("j.n.Y H:i:s", strtotime($this->data["transakce"]["cas_vytvoreni"]));
-           
-           //kontrola jestli element existuje (neni v databazi zapsano NULL)
-            if(isset($this->data["transakce"]["cas_zaplaceni"]) == null){
-
-                $this->data["transakce"]["cas_zaplaceni"] = "";
-            }else{
-                $this->data["transakce"]["cas_zaplaceni"] = date("j.n.Y H:i:s", strtotime($this->data["transakce"]["cas_zaplaceni"]));
-            }
-
-            //nastaveni selected hodnoty do selectu
-            if($this->data["transakce"]["zaplaceno"]){
-                $this->data["transakce"]["zaplaceno"] = "
-                <option value='0'>Ne</option>
-                <option value='1' selected>Ano</option>
-                ";
+                
+                //ziskani informaci o transakci
+                $this->data["transakce"] = Db::dotazJeden("SELECT *
+                FROM transakce
+                WHERE id_transakce = $_GET[id_transakce]");
+    
+                $this->data["transakce"]["cas_vytvoreni"] = date("j.n.Y H:i:s", strtotime($this->data["transakce"]["cas_vytvoreni"]));
+                
+                //kontrola jestli element existuje (neni v databazi zapsano NULL)
+                if(isset($this->data["transakce"]["cas_zaplaceni"]) == null){
+    
+                    $this->data["transakce"]["cas_zaplaceni"] = "";
+                }else{
+                    $this->data["transakce"]["cas_zaplaceni"] = date("j.n.Y H:i:s", strtotime($this->data["transakce"]["cas_zaplaceni"]));
+                }
+    
+                //nastaveni selected hodnoty do selectu
+                if($this->data["transakce"]["zaplaceno"]){
+                    $this->data["transakce"]["zaplaceno"] = "
+                    <option value='0'>Ne</option>
+                    <option value='1' selected>Ano</option>
+                    ";
+                } else {
+                    $this->data["transakce"]["zaplaceno"] = "
+                    <option value='0' selected>Ne</option>
+                    <option value='1'>Ano</option>
+                    ";
+                }
             } else {
-                $this->data["transakce"]["zaplaceno"] = "
-                <option value='0' selected>Ne</option>
-                <option value='1'>Ano</option>
-                ";
+                $test =  Formular::kontrolaDat($_POST);
+                // if($test){
+                //     $test = 1;
+                // }
+                // else
+                //     $test = 2;
+                $this->redirect("sprava?=$test");
             }
 
             // if(isset($_POST["upravit"])){

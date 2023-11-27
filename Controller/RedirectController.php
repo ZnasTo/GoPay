@@ -14,11 +14,16 @@ class RedirectController extends Controller {
             if (file_exists("Controller/$controllerName.php")) {
                 $this->controller = new $controllerName;
                 $this->controller->execute($partsOfPath);
-                $this->view = "htmlBase";
+                if (strcmp($controllerName,"LoginController") != 0 && strcmp($controllerName,"ErrorController") != 0) {
+                    $this->view = "htmlBase";
+                }
+                else {
+                    $this->view = "htmlBaseZkracena";
+                }
             }
             else {
-                print $partsOfPath[0];
-            //    $this->redirect("error"); 
+                // print $partsOfPath[0];
+                $this->redirect("error"); 
             }
         }
         else {

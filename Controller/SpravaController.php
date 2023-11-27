@@ -5,9 +5,6 @@ class SpravaController extends Controller{
         // $this->redirect("upravit");
         if($_SESSION["prihlasen"]== true){
 
-            if(isset($_POST["upravit"])){
-                print("ahoj");
-            }
             
             $transakce = Db::dotazVsechny(" SELECT *
             FROM transakce;
