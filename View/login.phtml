@@ -1,24 +1,66 @@
+<div class="row pt-5 pb-5 text-center text-white bg-primary">
 
-<h2>Přihlášení do systému</h2>
-<form  method="post">
-    <input type="text" name="jmeno" id="jmeno" required>
-    <label for="jmeno">zadej jmeno</label>
 
-    <input type="password" name="heslo" id="heslo" required>
-    <label for="heslo">zadej heslo</label>
+    <div class="col-12" >
 
-    <input type="submit" value="Prihlasit se">
-    <p></p>
-    <?php
-    // if(isset($this->data["error"]))
-    if(strlen($this->data["error"]) != 0){
-        ?>
-        <p><?=$this->data["error"]?></p>
-        <?php
-    }
-    ?>
+        <h1 class="text-large" >Přihlášení Do Systému</h1>
+    </div>
+    <!-- <div class="col-12">
 
-</form>
+        <h2>Aleš Recman,Vojtěch Mrkva</h2>
+    </div> -->
+</div>
+
+<!-- <div class="container-md p-2"> -->
+    <!-- <h2>Přihlášení do systému</h2> -->
+
+
+    
+<!-- </div> -->
+
+<div class="container">
+    <div class="row mt-3 "> 
+        <div class="col-xl">
+            
+        </div>
+        <div class="col-xl-4 border rounded-5 p-4">
+            
+            <div class="row text-center mb-2">
+                <h2>Přihlásit se</h2>
+            </div>
+            <div class="border "></div>
+            <form  method="post" >
+                <div class=" row mt-3">
+                    <label for="jmeno">Zadej jmeno</label>
+                    <input type="text" name="jmeno" id="jmeno" required class="form-control" placeholder="Jmeno">
+                </div>
+        
+                <div class=" row mt-3">
+                    <label for="heslo">Zadej heslo</label>
+                    <input type="password" name="heslo" id="heslo" required class="form-control" placeholder="Heslo">
+                </div>
+                <?php
+                // if(isset($this->data["error"]))
+                if(strlen($this->data["error"]) != 0){
+                    ?>
+                    <div class="text-center  mt-2">
+                        <p class="text-danger fw-semibold fst-italic  "><?=$this->data["error"]?></p>
+                    </div>
+                        <?php
+                    }
+                    ?>
+                <div class="row mt-3" text-center >
+                    <input type="submit" value="Prihlasit se" class="btn btn-primary ">
+                </div>
+            </form>
+           
+        </div>    
+        <div class="col-xl">
+            
+        </div>
+    </div>
+</div>
+
 
 
 

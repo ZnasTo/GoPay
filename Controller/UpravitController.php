@@ -11,26 +11,39 @@ class UpravitController extends Controller
 
                 
 
-                $zaplaceno = 1;
+
                 $cas_zaplaceni = "";
 
                 if($_POST["zaplaceno"]== 0){
-                    $zaplaceno = 0;
+                    // $_POST["zpusob_platby"] = "NULL";
                     $cas_zaplaceni = ",cas_zaplaceni = NULL ";
-                }
-                if($_POST["cas_zaplaceni"] == "" && $zaplaceno){
+                } else if($_POST["cas_zaplaceni"] == ""){
                     $cas_zaplaceni = ",cas_zaplaceni = NOW() ";  
+                }
+                
+
+                if (Formular::kontrolaDat($_POST)) {
+                    Db::dotaz("UPDATE transakce
+                    SET oddeleni = '$_POST[oddeleni]',jmeno = '$_POST[jmeno]',prijmeni ='$_POST[prijmeni]',email ='$_POST[email]',
+                    telefon ='$_POST[telefon]',mesto = '$_POST[mesto]',ulice ='$_POST[ulice]',CP='$_POST[CP]',PSC = '$_POST[PSC]',castka ='$_POST[castka]',zpusob_platby = '$_POST[zpusob_platby]',zaplaceno = '$_POST[zaplaceno]'
+                    " . $cas_zaplaceni . "
+                    WHERE id_transakce = '$_POST[id_transakce]'");
+                } else {
+                    //TODO error handeling
+                    $test =  Formular::kontrolaDat($_POST);
+                    if ($test) {
+                        $test = "true";
+                    } else {
+                        $test = "false";
+                    }
+                    $test = $_POST["zaplaceno"];
+                    $this->redirect("sprava?=$test");
                 }
 
                 //TODO mozna validaci, aby nesel sql injection attack
                 //upraveni dat v databazi
-                // Db::dotaz("UPDATE transakce
-                // SET oddeleni = '$_POST[oddeleni]',jmeno = '$_POST[jmeno]',prijmeni ='$_POST[prijmeni]',email ='$_POST[email]',
-                // telefon ='$_POST[telefon]',mesto = '$_POST[mesto]',ulice ='$_POST[ulice]',CP='$_POST[CP]',PSC = '$_POST[PSC]',castka ='$_POST[castka]',zpusob_platby = '$_POST[zpusob_platby]',zaplaceno = $zaplaceno 
-                // " . $cas_zaplaceni . "
-                // WHERE id_transakce = '$_POST[id_transakce]'");
 
-                print Formular::kontrolaDat($_POST);
+                // print Formular::kontrolaDat($_POST);
             }
 
             
@@ -67,11 +80,6 @@ class UpravitController extends Controller
                 }
             } else {
                 $test =  Formular::kontrolaDat($_POST);
-                // if($test){
-                //     $test = 1;
-                // }
-                // else
-                //     $test = 2;
                 $this->redirect("sprava?=$test");
             }
 

@@ -2,64 +2,72 @@
 date_default_timezone_set('Europe/Prague');
 ?>
 
+<div class="row pt-5 pb-5 text-center text-white bg-primary">
+  <div class="col-12" >
+    <h1 class="text-large">Správa Transakcí</h1>
+  </div>
 
-<h1 class="text-center pt-3 pb-3">Správa transakcí</h1>
+</div>
+
+<h1 class="text-center pt-3 pb-3">Informace o Transakcích</h1>
   
+<div class="container-xxl  table-responsive-xl">
+  <!-- <div class="col-md-12 table-responsive-xl  "> -->
 
-  <table class="table  table-responsive fixed-table-body table-striped table-sm">
-  <thead class="table-dark">
-    <tr>
-
-      <th>Číslo transakce</th>
-      <th>Oddělení</th>
-      <th>Jméno</th>
-      <th>Příjmení</th>
-      <th>Email</th>
-      <th>Telefon</th>
-      <th>Město</th>
-      <th>Ulice</th>
-      <th>Číslo popisné</th>
-      <th>PSČ</th>
-      <th>Způsob platby</th>
-      <th>Částka</th>
-      <th>Zaplaceno</th>
-      <th>Čas vytvoření</th>
-      <th>Čas zaplaceni</th>
-      <th></th>
-    </tr>
-
-  </thead>
-  <tbody>
-
-    <?php foreach ($transakce as $radek){ ?>
-    <tr>
-      <td><?= $radek['id_transakce']; ?></td>
-      <td><?= $radek['oddeleni']; ?></td>
-      <td><?= $radek['jmeno']; ?></td>
-      <td><?= $radek['prijmeni']; ?></td>
-      <td><?= $radek['email']; ?></td>
-      <td><?= $radek['telefon']; ?></td>
-      <td><?= $radek['mesto']; ?></td>
-      <td><?= $radek['ulice']; ?></td>
-      <td><?= $radek['CP']; ?></td>
-      <td><?= $radek['PSC']; ?></td>
-      <td><?= $radek['zpusob_platby']; ?></td>
-      <td><?= $radek['castka'] . "Kč"; ?></td>
-      <td><?php
-      if($radek['zaplaceno'] == true){
-        echo 'Ano';
-      } else {
-        echo 'Ne';
-      } 
-      ?></td>
-      <td><?=date("j.n.Y H:i:s", strtotime($radek['cas_vytvoreni'])); ?></td>
-      <td><?php if($radek["cas_zaplaceni"] != NULL) echo(date("j.n.Y H:i:s", strtotime($radek['cas_zaplaceni']))); ?></td>
+    <table class="table fixed-table-body table-striped table-sm table-hover text-center ">
+      <thead class="table-dark">
+        <tr>
+          <th>Číslo transakce</th>
+          <th>Oddělení</th>
+          <th>Jméno</th>
+          <th>Příjmení</th>
+          <th>Email</th>
+          <th>Telefon</th>
+          <th>Město</th>
+          <th>Ulice</th>
+          <th>Číslo popisné</th>
+          <th>PSČ</th>
+          <th>Způsob platby</th>
+          <th>Částka</th>
+          <th>Zaplaceno</th>
+          <th>Čas vytvoření</th>
+          <th>Čas zaplaceni</th>
+          <th></th>
+        </tr>
+      </thead>
   
-      <td>
-      <a href="<?=$this->view?>?odstranit=<?=$radek["id_transakce"] ?>">Odstranit</a>
-      <a href="<?=$this->view?>?upravit=<?= $radek["id_transakce"] ?>">Upravit</a>
-      </td>
-    </tr>
-    <?php } ?>
-  </tbody>
-</table>
+      <tbody>
+        <?php foreach ($transakce as $radek){ ?>
+        <tr>
+          <td><?= $radek['id_transakce']; ?></td>
+          <td><?= $radek['oddeleni']; ?></td>
+          <td><?= $radek['jmeno']; ?></td>
+          <td><?= $radek['prijmeni']; ?></td>
+          <td><?= $radek['email']; ?></td>
+          <td><?= $radek['telefon']; ?></td>
+          <td><?= $radek['mesto']; ?></td>
+          <td><?= $radek['ulice']; ?></td>
+          <td><?= $radek['CP']; ?></td>
+          <td><?= $radek['PSC']; ?></td>
+          <td><?= $radek['zpusob_platby']; ?></td>
+          <td><?= $radek['castka'] . "Kč"; ?></td>
+          <td><?php
+          if($radek['zaplaceno'] == true){
+            echo 'Ano';
+          } else {
+            echo 'Ne';
+          } 
+          ?></td>
+          <td><?=date("j.n.Y H:i:s", strtotime($radek['cas_vytvoreni'])); ?></td>
+          <td><?php if($radek["cas_zaplaceni"] != NULL) echo(date("j.n.Y H:i:s", strtotime($radek['cas_zaplaceni']))); ?></td>
+      
+          <td>
+            <a href="<?=$this->view?>?upravit=<?= $radek["id_transakce"] ?>"><i class="bi bi-pencil-square fs-5"></i></a>
+            <a href="<?=$this->view?>?odstranit=<?=$radek["id_transakce"] ?>"><i class="bi bi-trash-fill text-danger fs-5 "></i></a>
+          </td>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  <!-- </div> -->
+</div>

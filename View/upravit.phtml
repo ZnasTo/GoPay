@@ -1,53 +1,132 @@
-<!-- TODO values nahaze do tohodle formulare -->
-<form method="POST" action="upravit">
 
-    <label for="id_transakce">ID: </label>
-    <input type="number" name="id_transakce" id="id_transakce" value="<?=$this->data["transakce"]["id_transakce"]?>" required readonly><br>
+<div class="row pt-5 pb-5 text-center text-white bg-primary">
+
+
+    <div class="col-12" >
+
+        <h1 class="text-large" >Úprava záznamu</h1>
+    </div>
+    <!-- <div class="col-12">
+
+        <h2>Aleš Recman,Vojtěch Mrkva</h2>
+    </div> -->
+</div>
+
+<div class="container">
+    <div class="row mt-3 "> 
+        <div class="col-xl-1">
+            
+        </div>
+        <div class="col-xl-10 border rounded-5 p-3">
+            
+            <div class="row text-center my-3">
+        
+                <h2>Číslo Objednávky: <?=$this->data["transakce"]["id_transakce"]?></h2>
+            </div>
+            <div class="border "></div>
+            <form method="POST" action="upravit">
+                <div class="row mt-3">
+                    <div class="form-group col-md-6">
+                        <label for="jmeno">Jméno: </label>
+                        <input type="text" name="jmeno" id="jmeno" value="<?=$this->data["transakce"]["jmeno"]?>" required class="form-control ">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="prijmeni">Příjmení: </label>
+                        <input type="text" name="prijmeni" id="prijmeni" value="<?=$this->data["transakce"]["prijmeni"]?>" required class="form-control">
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="form-group col-md-6">
+                        <label for="email">Email: </label class="form-label">
+                        <input type="email" name="email" id="email" value="<?=$this->data["transakce"]["email"]?>" required class="form-control">
+                    </div>
+                        <div class="form-group col-md-6">
+                            <label for="telefon">Telefonní číslo: </label class="form-label">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">+</div>
+                                    </div>
+                                    <input type="tel" name="telefon" id="telefon" value="<?=$this->data["transakce"]["telefon"]?>" required class="form-control">
+                                </div>
+                        </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="form-group col-md-4">
+                        <label for="mesto">Město: </label class="form-label">
+                        <input type="text" name="mesto" id="mesto" value="<?=$this->data["transakce"]["mesto"]?>" required class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ulice">Ulice: </label class="form-label">
+                        <input type="text" name="ulice" id="ulice" value="<?=$this->data["transakce"]["ulice"]?>" required class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="CP">Číslo popisné: </label class="form-label">
+                        <input type="number" name="CP" id="CP" value="<?=$this->data["transakce"]["CP"]?>" required class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="PSC">PSČ: </label class="form-label">
+                            <input type="number" name="PSC" id="PSC" value="<?=$this->data["transakce"]["PSC"]?>" required class="form-control">
+                        </div>
+                </div>
+                    
+                
+                <div class="row mt-3">
+                    <div class="form-group col-md-6">
+                        <label for="oddeleni">Oddělení: </label class="form-label">
+                        <input type="text" name="oddeleni" id="oddeleni" value="<?=$this->data["transakce"]["oddeleni"]?>" required class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="castka">Částka: </label class="form-label" >
+                        <input type="number" name="castka" id="castka" value="<?=$this->data["transakce"]["castka"]?>" required class="form-control">
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="form-group col-md-6">
+                        <label for="cas_vytvoreni">Čas Vytvoření: </label class="form-label">
+                        <input type="text" name="cas_vytvoreni" id="cas_vytvoreni" value="<?=$this->data["transakce"]["cas_vytvoreni"]?>" required readonly class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="zaplaceno">Zaplaceno: </label class="form-label">
+                        <Select name="zaplaceno" id="zaplaceno"  required class="form-select">
+                            <?=$this->data["transakce"]["zaplaceno"]?>
+                        </Select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="form-group col-md-6">
+                        <label for="cas_zaplaceni">Čas Zaplacení: </label class="form-label">
+                            <input type="text" name="cas_zaplaceni" id="cas_zaplaceni" value="<?=$this->data["transakce"]["cas_zaplaceni"]?>" readonly class="form-control">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="zpusob_platby">Způsob platby: </label class="form-label">
+                        <input type="text" name="zpusob_platby" id="zpusob_platby"value="<?=$this->data["transakce"]["zpusob_platby"]?>" class="form-control">
+                    </div>
+                </div>
+                <div class="row mt-3 mb-2">
+                    <div class="col-sm-4">
+                        <button href="sprava" class="btn btn-primary">Zpět</button>
+                    </div>
+                    <div class="col-sm-4">
+                
+                    </div>
+                    <div class="col-sm-4 text-end  ">
+                        <button type="submit" class="btn btn-primary ">Změnit</button>
+                    </div>
+                </div>   
+            </form>
+        </div>    
+        <div class="col-xl-1">
+            
+        </div>
+    </div>
+</div>
+
+
+
     
-    <label for="oddeleni">Oddělení: </label>
-    <input type="text" name="oddeleni" id="oddeleni" value="<?=$this->data["transakce"]["oddeleni"]?>" required><br>
-    
-    <label for="jmeno">Jméno: </label>
-    <input type="text" name="jmeno" id="jmeno" value="<?=$this->data["transakce"]["jmeno"]?>" required><br>
-    <label for="prijmeni">Příjmení: </label>
-    <input type="text" name="prijmeni" id="prijmeni" value="<?=$this->data["transakce"]["prijmeni"]?>" required><br>
-    <label for="email">Email: </label>
-    <input type="email" name="email" id="email" value="<?=$this->data["transakce"]["email"]?>" required><br>
-    <label for="telefon">Telefonní číslo: </label>
-    <span>+</span><input type="tel" name="telefon" id="telefon" value="<?=$this->data["transakce"]["telefon"]?>" required>
-
-
-    <label for="ulice">Ulice: </label>
-    <input type="text" name="ulice" id="ulice" value="<?=$this->data["transakce"]["ulice"]?>" required><br>
-    <label for="mesto">Město: </label>
-    <input type="text" name="mesto" id="mesto" value="<?=$this->data["transakce"]["mesto"]?>" required><br>
-    <label for="PSC">PSČ: </label>
-    <input type="number" name="PSC" id="PSC" value="<?=$this->data["transakce"]["PSC"]?>" required>
-    <label for="CP">Číslo popisné: </label>
-    <input type="number" name="CP" id="CP" value="<?=$this->data["transakce"]["CP"]?>" required>
-    
-
-
-    <label for="castka">Částka: </label>
-    <input type="number" name="castka" id="castka" value="<?=$this->data["transakce"]["castka"]?>" required><br>
-
-    <label for="zpusob_platby">Způsob platby: </label>
-    <input type="text" name="zpusob_platby" id="zpusob_platby"value="<?=$this->data["transakce"]["zpusob_platby"]?>"><br>
-    <label for="zaplaceno">Zaplaceno: </label>
-
-    <Select name="zaplaceno" id="zaplaceno"  required >
-                <?=$this->data["transakce"]["zaplaceno"]?>
-    </Select>
-
-    <label for="cas_vytvoreni">Čas Vytvoření: </label>
-    <input type="text" name="cas_vytvoreni" id="cas_vytvoreni" value="<?=$this->data["transakce"]["cas_vytvoreni"]?>" required readonly><br>
-
-
-    <label for="cas_zaplaceni">Čas Zaplacení: </label>
-    <input type="text" name="cas_zaplaceni" id="cas_zaplaceni" value="<?=$this->data["transakce"]["cas_zaplaceni"]?>" readonly><br>
 
 
 
-    <button href="sprava">Zpět</button>
-    <button type="submit">Změnit</button>
-</form>
