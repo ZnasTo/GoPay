@@ -2,15 +2,14 @@
 class SpravaController extends Controller{
     public function execute($parameters){
 
-        // $this->redirect("upravit");
         if($_SESSION["prihlasen"]== true){
 
-            
+            //query pro ziskani dat z databaze
             $transakce = Db::dotazVsechny(" SELECT *
             FROM transakce;
             ");
 
-        
+            //odstraneni zaznamu
             if (isset($_GET["odstranit"])) {
                 $idTransakce = $_GET["odstranit"];
                 Db::odstran("transakce","id_transakce",$idTransakce);; 
@@ -18,10 +17,10 @@ class SpravaController extends Controller{
             }
             $this->data["transakce"] = $transakce;
             $this->view = "sprava";
-            
+
+            //presmerovani na upravit   
             if (isset($_GET["upravit"])) {
                 $idTransakce = $_GET["upravit"];
-                // $_POST["neco"] = "neco";
                 $this->redirect("upravit?id_transakce=$idTransakce");
             }
             

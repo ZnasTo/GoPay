@@ -18,22 +18,13 @@ class UpravitController extends Controller
                     $dataZFormulare[$key] = $value;
                 }
 
-                // $dataZFormulare["zpusob_platby"];
-                
-                // if(!$dataZFormulare["zaplaceno"]){
-                    //     // $_POST["zpusob_platby"] = "NULL";
-                    //     // $dataZFormulare["cas_zaplaceni"] = ",cas_zaplaceni = NULL ";
-                    //     $dataZFormulare["cas_zaplaceni"] = "NULL ";
-                    //     $dataZFormulare["zpusob_platby"] = "zpusob_platby = NULL ";
-                    
-                    // } 
-                    // else 
                 $validniZpusobPlatby = true;
+                //nastaveni cas_zaplaceni a zpusob platby, ktere  jsou zavisle na tom, jestli byla objednavka zaplacena
                 if(!$dataZFormulare["byla_zaplacena"] && $dataZFormulare["zaplaceno"]){
-                    // $dataZFormulare["cas_zaplaceni"] = ",cas_zaplaceni = NOW() ";  
                     $dataZFormulare["cas_zaplaceni"] = "cas_zaplaceni = NOW() ";  
                     if(!isset($dataZFormulare["zpusob_platby"])){
                         $validniZpusobPlatby = false;
+                        //TODO zakomponovat bud do validace nebo nejak proste vyhodit error
                     } else {
                         $dataZFormulare["zpusob_platby"] = "zpusob_platby = '$dataZFormulare[zpusob_platby]'";
                     }
@@ -47,23 +38,21 @@ class UpravitController extends Controller
                 
                 
                 $form = new Formular;
-                
                 if ($form->kontrolaDat($dataZFormulare) && $validniZpusobPlatby) {
+                    //upraveni dat v databazi
                     Db::dotaz("UPDATE transakce
                     SET oddeleni = '$dataZFormulare[oddeleni]',jmeno = '$dataZFormulare[jmeno]',prijmeni ='$dataZFormulare[prijmeni]',email ='$dataZFormulare[email]',
                     telefon ='$dataZFormulare[telefon]',mesto = '$dataZFormulare[mesto]',ulice ='$dataZFormulare[ulice]',CP='$dataZFormulare[CP]',PSC = '$dataZFormulare[PSC]',castka ='$dataZFormulare[castka]'
                     ,$dataZFormulare[zpusob_platby], zaplaceno = '$dataZFormulare[zaplaceno]',$dataZFormulare[cas_zaplaceni]
                     WHERE id_transakce = '$dataZFormulare[id_transakce]'");
                 } else {
-                    //TODO error handeling
+                    // error handeling
                     $test = $form->getErrorMSG();
                     $this->redirect("sprava?=$test");
                 }
 
 
-                //upraveni dat v databazi
 
-                // print Formular::kontrolaDat($_POST);
             }
 
             

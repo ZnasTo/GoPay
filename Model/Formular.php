@@ -3,12 +3,12 @@
 //TODO pridat funkci getErrorMsg
 class Formular
 {
-    //vraci true, kdyz jsou data validni a flase, kdyz nejsou 
+    // pokud overeni neprojde chybova hlaska se tady ulozi  
     private $errorMSG;
-
     public function getErrorMSG(){
         return $this->errorMSG;
     }
+    //vraci true, kdyz jsou data validni a flase, kdyz nejsou 
     public function kontrolaDat($parameters = array()){
 
         if (!isset($parameters["id_transakce"])) {
@@ -136,58 +136,14 @@ class Formular
         }
 
         if (isset($parameters["castka"])) {
-            // if ($parameters["castka"] != 0) {
             if (intval($parameters["castka"]) <= 0) {
                 $this->errorMSG = "částka nemůže být menší nebo rovna nule";
                 return false;
             } 
-            // } 
-
-
         } else {
             $this->errorMSG = "částka není zadána";
             return false;
         }
-        // if (isset($parameters["zaplaceno"])) {
-
-        //     //TODO proc to nefunguje
-        //     if($parameters["zaplaceno"] != 0 || $parameters["zaplaceno"] != 1) {
-        //         return true;
-        //     }
-            
-        //     // if($parameters["zaplaceno"]== 0){
-        //     //     // if (isset($parameters["zpusob_platby"])) {
-        //     //     //     return false;
-        //     //     // }
-        //     //     // else {
-        //     //     //     return false;
-        //     //     // }
-        //     //     if (isset($parameters["cas_zaplaceni"])) {
-        //     //         return false;
-        //     //     }
-        //     //     // $zaplaceno = 0;
-        //     // } else {
-        //     //     if (isset($parameters["zpusob_platby"])) {
-        //     //         //TODO povolene zpusoby platby, musim zjistit
-        //     //     } else {
-        //     //         return false;
-        //     //     }
-        //     // }
-
-            
-        // }
-
-
-        // if (!isset($parameters["cas_vytvoreni"]) ) {
-        //     return false;
-        // }
-
-        
-
-        //zpusob platby
-
-        
-
 
         return true;
     }
