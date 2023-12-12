@@ -25,6 +25,9 @@
             </div>
             <div class="border "></div>
             <form method="POST" action="upravit">
+
+                <input type="hidden" name="id_transakce" id="id_transakce" value="<?=$this->data["transakce"]["id_transakce"] ?>">
+                <input type="hidden" name="byla_zaplacena" id="byla_zaplacena" value="<?=$this->data["transakce"]["byla_zaplacena"] ?>">
                 <div class="row mt-3">
                     <div class="form-group col-md-6">
                         <label for="jmeno">Jméno: </label>

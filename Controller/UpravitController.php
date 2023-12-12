@@ -1,7 +1,7 @@
 <?php
 
 class UpravitController extends Controller
-{
+{   
     public function execute($parameters){
        
         if($_SESSION["prihlasen"]==true){
@@ -10,37 +10,57 @@ class UpravitController extends Controller
             if(isset($_POST["jmeno"])){
 
                 
-
-
-                $cas_zaplaceni = "";
-
-                if($_POST["zaplaceno"]== 0){
-                    // $_POST["zpusob_platby"] = "NULL";
-                    $cas_zaplaceni = ",cas_zaplaceni = NULL ";
-                } else if($_POST["cas_zaplaceni"] == ""){
-                    $cas_zaplaceni = ",cas_zaplaceni = NOW() ";  
-                }
+                $dataZFormulare = array();
                 
 
-                if (Formular::kontrolaDat($_POST)) {
+
+                foreach ($_POST as $key => $value) {
+                    $dataZFormulare[$key] = $value;
+                }
+
+                // $dataZFormulare["zpusob_platby"];
+                
+                // if(!$dataZFormulare["zaplaceno"]){
+                    //     // $_POST["zpusob_platby"] = "NULL";
+                    //     // $dataZFormulare["cas_zaplaceni"] = ",cas_zaplaceni = NULL ";
+                    //     $dataZFormulare["cas_zaplaceni"] = "NULL ";
+                    //     $dataZFormulare["zpusob_platby"] = "zpusob_platby = NULL ";
+                    
+                    // } 
+                    // else 
+                $validniZpusobPlatby = true;
+                if(!$dataZFormulare["byla_zaplacena"] && $dataZFormulare["zaplaceno"]){
+                    // $dataZFormulare["cas_zaplaceni"] = ",cas_zaplaceni = NOW() ";  
+                    $dataZFormulare["cas_zaplaceni"] = "cas_zaplaceni = NOW() ";  
+                    if(!isset($dataZFormulare["zpusob_platby"])){
+                        $validniZpusobPlatby = false;
+                    } else {
+                        $dataZFormulare["zpusob_platby"] = "zpusob_platby = '$dataZFormulare[zpusob_platby]'";
+                    }
+                } else if(!$dataZFormulare["zaplaceno"]){
+                    $dataZFormulare["cas_zaplaceni"] = "cas_zaplaceni = NULL ";
+                    $dataZFormulare["zpusob_platby"] = "zpusob_platby = NULL ";
+                } else {
+                    $dataZFormulare["zpusob_platby"] = "zpusob_platby = '$dataZFormulare[zpusob_platby]'";
+                    $dataZFormulare["cas_zaplaceni"] = "cas_zaplaceni = STR_TO_DATE('$dataZFormulare[cas_zaplaceni]', '%d.%m.%Y %H:%i:%s')";
+                }
+                
+                
+                $form = new Formular;
+                
+                if ($form->kontrolaDat($dataZFormulare) && $validniZpusobPlatby) {
                     Db::dotaz("UPDATE transakce
-                    SET oddeleni = '$_POST[oddeleni]',jmeno = '$_POST[jmeno]',prijmeni ='$_POST[prijmeni]',email ='$_POST[email]',
-                    telefon ='$_POST[telefon]',mesto = '$_POST[mesto]',ulice ='$_POST[ulice]',CP='$_POST[CP]',PSC = '$_POST[PSC]',castka ='$_POST[castka]',zpusob_platby = '$_POST[zpusob_platby]',zaplaceno = '$_POST[zaplaceno]'
-                    " . $cas_zaplaceni . "
-                    WHERE id_transakce = '$_POST[id_transakce]'");
+                    SET oddeleni = '$dataZFormulare[oddeleni]',jmeno = '$dataZFormulare[jmeno]',prijmeni ='$dataZFormulare[prijmeni]',email ='$dataZFormulare[email]',
+                    telefon ='$dataZFormulare[telefon]',mesto = '$dataZFormulare[mesto]',ulice ='$dataZFormulare[ulice]',CP='$dataZFormulare[CP]',PSC = '$dataZFormulare[PSC]',castka ='$dataZFormulare[castka]'
+                    ,$dataZFormulare[zpusob_platby], zaplaceno = '$dataZFormulare[zaplaceno]',$dataZFormulare[cas_zaplaceni]
+                    WHERE id_transakce = '$dataZFormulare[id_transakce]'");
                 } else {
                     //TODO error handeling
-                    $test =  Formular::kontrolaDat($_POST);
-                    if ($test) {
-                        $test = "true";
-                    } else {
-                        $test = "false";
-                    }
-                    $test = $_POST["zaplaceno"];
+                    $test = $form->getErrorMSG();
                     $this->redirect("sprava?=$test");
                 }
 
-                //TODO mozna validaci, aby nesel sql injection attack
+
                 //upraveni dat v databazi
 
                 // print Formular::kontrolaDat($_POST);
@@ -49,7 +69,7 @@ class UpravitController extends Controller
             
             //overujeme ze je zadane id
             if (isset($_GET["id_transakce"])) {
-
+                // $this->id = $_GET["id_transakce"];
                 
                 //ziskani informaci o transakci
                 $this->data["transakce"] = Db::dotazJeden("SELECT *
@@ -65,7 +85,8 @@ class UpravitController extends Controller
                 }else{
                     $this->data["transakce"]["cas_zaplaceni"] = date("j.n.Y H:i:s", strtotime($this->data["transakce"]["cas_zaplaceni"]));
                 }
-    
+
+                $this->data["transakce"]["byla_zaplacena"] = $this->data["transakce"]["zaplaceno"];
                 //nastaveni selected hodnoty do selectu
                 if($this->data["transakce"]["zaplaceno"]){
                     $this->data["transakce"]["zaplaceno"] = "
@@ -73,19 +94,18 @@ class UpravitController extends Controller
                     <option value='1' selected>Ano</option>
                     ";
                 } else {
+
                     $this->data["transakce"]["zaplaceno"] = "
                     <option value='0' selected>Ne</option>
                     <option value='1'>Ano</option>
                     ";
                 }
             } else {
-                $test =  Formular::kontrolaDat($_POST);
-                $this->redirect("sprava?=$test");
+                // $test =  Formular::kontrolaDat($_POST);
+                $this->redirect("sprava?=neco");
             }
 
-            // if(isset($_POST["upravit"])){
-            //     print("ahoj");
-            // }
+
         }
         else {
             $this->redirect("login");

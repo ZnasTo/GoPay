@@ -9,6 +9,7 @@ class SpravaController extends Controller{
             $transakce = Db::dotazVsechny(" SELECT *
             FROM transakce;
             ");
+
         
             if (isset($_GET["odstranit"])) {
                 $idTransakce = $_GET["odstranit"];
