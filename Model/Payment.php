@@ -26,16 +26,26 @@ class Payment
 
     function __construct(){
 
-        $this->cisloObjednavky = intval(Db::dotazJeden(
-            "SELECT MAX(id_transakce) 
-            FROM transakce;
-            ")) + 1;
+        $this->cisloObjednavky  = Db::idPoslednihoVlozeneho();
     }
 
-    
+    //pri uspesnem vytvoreni vrati url jinak vrati error
+    //https://doc.gopay.cz/#error-scope
+    //error 1 nepovedlo se ulozit data do databaze
     public function getGoPayUrl($buyerData, $returnURL){
         $this->buyerData = $buyerData;
         $this->returnURL = $returnURL;
+
+        $dotaz = Db::dotaz("INSERT into transakce
+        VALUES(NULL, '{$this->buyerData['oddeleni']}',
+            '{$this->buyerData['jmeno']}', '{$this->buyerData['prijmeni']}', '{$this->buyerData['email']}',
+            '{$this->buyerData['telefon']}', '{$this->buyerData['mesto']}', '{$this->buyerData['ulice']}', '{$this->buyerData['CP']}', '{$this->buyerData['PSC']}',
+            '{$this->buyerData['castka']}', NULL, 0, NOW(), NULL
+        );");
+        if($dotaz == 0) {
+            return 'error 1'; 
+        }
+
         $this->createPayment();
 
 
@@ -44,18 +54,33 @@ class Payment
             return $this->response->json['gw_url'];        
     }
     else{   
-            return 'error '.  print $this->response->statusCode;
+            return 'error '.  $this->response->statusCode;
         }
     }
 
     public function getStatus($statusID){
-        return $this->token->getStatus($statusID);
+        $this->initialisePayment();
+        $response = $this->token->getStatus($statusID);
+        if ($response->hasSucceed()) {
+            $responseBody = $response->json;
+            // Individual response parameters can be accessed by name
+            $paymentStatus = $responseBody['state'];
+        }
+        return $paymentStatus;
+
+    }
+
+    public function getIformation($statusID){
+        $this->initialisePayment();
+        $response = $this->token->getStatus($statusID);
+        if ($response->hasSucceed()) {
+            $responseBody = $response->json;
+        }
+        return $responseBody;
 
     }
 
     private function createPayment(){ 
-        // TODO data z formuláře
-
         
        $this->initialisePayment();
 
@@ -66,17 +91,17 @@ class Payment
             'allowed_payment_instruments' => [PaymentInstrument::BANK_ACCOUNT,PaymentInstrument::PAYMENT_CARD,PaymentInstrument::BITCOIN],
             //     'default_swift' => BankSwiftCode::FIO_BANKA,
             'allowed_swifts' => [BankSwiftCode::FIO_BANKA, BankSwiftCode::MBANK],
-                'contact' => ['first_name' => 'Zbynek',
-                        'last_name' => 'Zak',
-                        'email' => 'testovaciEmail1@test.cz',
-                        'phone_number' => '+420777456123',
-                        'city' => 'C.Budejovice',
-                        'street' => 'Plana 67',
-                        'postal_code' => '373 01',
+                'contact' => ['first_name' => $this->buyerData["jmeno"],
+                        'last_name' => $this->buyerData["prijmeni"],
+                        'email' => $this->buyerData["email"],
+                        'phone_number' => "+" . $this->buyerData["telefon"],
+                        'city' => $this->buyerData["mesto"],
+                        'street' => $this->buyerData["ulice"] . ' ' . $this->buyerData["CP"],
+                        'postal_code' => $this->buyerData["PSC"],
                         'country_code' => 'CZE'
                 ]
         ],
-        'amount' => 123612211,
+        'amount' => $this->buyerData["castka"],
         'currency' => Currency::CZECH_CROWNS,
         'order_number' => $this->cisloObjednavky,
     // 'order_description' => 'obuv',

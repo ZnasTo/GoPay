@@ -1,21 +1,89 @@
-<form method="get" action="zaplatit">
-    <fieldset>
-        <legend>Zakladní informace</legend>
-        <label for="first_name">Jméno: </label><input type="text" name="first_name" id="first_name"><br>
-        <label for="last_name">Příjmení: </label><input type="text" name="last_name" id="last_name"><br>
-        <label for="email">Email: </label><input type="email" name="email" id="email"><br>
-        <label for="phone_number">Telefonní číslo: </label><input type="tel" name="phone_number" id="phone_number">
-    </fieldset>
-    <fieldset>
-        <legend>Adresa</legend>
-        <label for="street">Ulice: </label><input type="text" name="street" id="street"><br>
-        <label for="city">Město: </label><input type="text" name="city" id="city"><br>
-        <label for="postal_code">PSČ: </label><input type="number" name="postal_code" id="postal_code">
-    </fieldset>
-    <fieldset>
-        <legend>Penize</legend>
-        <label for="amount">Částka: </label><input type="number" name="amount" id="amount" required><br>
-    </fieldset>
 
-    <button type="submit">Pokracovat</button>
-</form>
+<div class="row pt-5 pb-5 text-center text-white bg-primary">
+    <div class="col-12" >
+        <h1 class="text-large" >Formulář Zaplaceni</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-3 "> 
+        <div class="col-xl-1">
+            
+        </div>
+        <div class="col-xl-10 border rounded-5 p-3">
+            
+            <div class="row text-center my-3">
+        
+                <h2>Dodací údaje:</h2>
+            </div>
+            <div class="border"></div>
+            <form method="POST" action="formular">
+
+                <div class="row mt-3">
+                    <div class="form-group col-md-6">
+                        <label for="jmeno" class="form-label">Jméno: </label>
+                        <input type="text" name="jmeno" id="jmeno"  required class="form-control ">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="prijmeni" class="form-label">Příjmení: </label>
+                        <input type="text" name="prijmeni" id="prijmeni"  required class="form-control">
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="form-group col-md-4">
+                        <label for="email" class="form-label">Email: </label>
+                        <input type="email" name="email" id="email"  required class="form-control">
+                    </div>
+                        <div class="form-group col-md-4">
+                            <label for="telefon" class="form-label">Telefonní číslo: </label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">+</div>
+                                    </div>
+                                    <input type="tel" name="telefon" id="telefon" required class="form-control">
+                                </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                        <label for="castka" class="form-label">Částka: </label >
+                        <input type="number" name="castka" id="castka"  required class="form-control">
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="form-group col-md-4">
+                        <label for="mesto" class="form-label">Město: </label>
+                        <input type="text" name="mesto" id="mesto" required class="form-control">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ulice" class="form-label">Ulice: </label>
+                        <input type="text" name="ulice" id="ulice" required class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="CP" class="form-label">Číslo popisné: </label>
+                        <input type="number" name="CP" id="CP" required class="form-control">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="PSC" class="form-label">PSČ: </label>
+                            <input type="number" name="PSC" id="PSC" required class="form-control">
+                        </div>
+                </div>
+                <!-- <div class="border mt-3 mt-3"></div> -->
+                <div class="row mt-4 mb-2">
+                    <div class="col-sm-4">
+                        <button href="uvod" class="btn btn-primary">Zpět</button>
+                    </div>
+                    <div class="col-sm-4">
+                
+                    </div>
+                    <div class="col-sm-4 text-end  ">
+                        <button type="submit" class="btn btn-primary ">Pokračovat</button>
+                    </div>
+                </div>   
+            </form>
+        </div>    
+        <div class="col-xl-1">
+            
+        </div>
+    </div>
+</div>

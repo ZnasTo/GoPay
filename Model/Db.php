@@ -93,6 +93,10 @@ class Db {
 	// Vrací ID posledně vloženého záznamu
 	public static function idPoslednihoVlozeneho()
 	{
-		return self::$spojeni->lastInsertId();
+		return intval(Db::dotazJeden(
+            "SELECT MAX(id_transakce) 
+            FROM transakce;
+            ")) + 1;
+
 	}
 }

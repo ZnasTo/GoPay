@@ -1,6 +1,20 @@
-<?php if(isset($state)) { ?>
-<p class='state' ><?= $state ?></p>
-<?php }?>
-<form action="<?=$url?>" method="post">
-    <button name="pay" type="submit">Zaplatit</button>
-</form>
+<div class="row pt-5 pb-5 text-center text-white bg-primary">
+        <div class="col-12" >
+            <h1 class="text-large" >Zaplatit Objednávku</h1>
+        </div>
+</div>
+<div class="container-md bg-light p-2">
+    <p>po zmáčknutí budete přesměrování na platební bránu</p>
+
+
+    <?php if(isset($state)) { ?>
+        <p><?= $this->data["stavObjednavky"] ?></p>
+    <?php }?>
+    <form action="<?=$this->data["gopay_url"]?>" method="post" class="text-center ">
+    <button name="pay" type="submit" class="btn btn-primary btn-lg btn-zaplatit">Zaplatit</button>
+    </form>
+
+
+</div>
+
+    

@@ -11,9 +11,6 @@ class UpravitController extends Controller
 
                 
                 $dataZFormulare = array();
-                
-
-
                 foreach ($_POST as $key => $value) {
                     $dataZFormulare[$key] = $value;
                 }
@@ -46,9 +43,9 @@ class UpravitController extends Controller
                     ,$dataZFormulare[zpusob_platby], zaplaceno = '$dataZFormulare[zaplaceno]',$dataZFormulare[cas_zaplaceni]
                     WHERE id_transakce = '$dataZFormulare[id_transakce]'");
                 } else {
-                    // error handeling
-                    $test = $form->getErrorMSG();
-                    $this->redirect("sprava?=$test");
+                    //TODO error handeling
+                    $error = $form->getErrorMSG();
+                    $this->redirect("sprava?=$error");
                 }
 
 
