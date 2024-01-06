@@ -63,7 +63,6 @@ class Payment
         $response = $this->token->getStatus($statusID);
         if ($response->hasSucceed()) {
             $responseBody = $response->json;
-            // Individual response parameters can be accessed by name
             $paymentStatus = $responseBody['state'];
         }
         return $paymentStatus;
