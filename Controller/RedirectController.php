@@ -19,8 +19,14 @@ class RedirectController extends Controller {
             if (file_exists("Controller/$controllerName.php")) {
                 $this->controller = new $controllerName;
                 $this->controller->execute($partsOfPath);
-
-                $this->view = "htmlBase";
+                // if (strcmp($controllerName,"LoginController") != 0 && strcmp($controllerName,"ErrorController") != 0) {
+                    if($controllerName != "ApiController") {
+                        $this->view = "htmlBase";
+                    }
+                // }
+                // else {
+                    // $this->view = "htmlBaseZkracena";
+                // }
             }
             else {
                 // Přesměrování na error, pokud controller neexistuje
