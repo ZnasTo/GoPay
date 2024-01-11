@@ -15,7 +15,9 @@ class RedirectController extends Controller {
                 $this->controller = new $controllerName;
                 $this->controller->execute($partsOfPath);
                 // if (strcmp($controllerName,"LoginController") != 0 && strcmp($controllerName,"ErrorController") != 0) {
-                    $this->view = "htmlBase";
+                    if($controllerName != "ApiController") {
+                        $this->view = "htmlBase";
+                    }
                 // }
                 // else {
                     // $this->view = "htmlBaseZkracena";
