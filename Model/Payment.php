@@ -16,7 +16,6 @@ use GoPay\Definition\Payment\PaymentItemType;
 require("vendor/autoload.php");
 class Payment
 {   
-
     private $buyerData;
     private $cisloObjednavky;
     private $response;
@@ -160,7 +159,7 @@ private function initialisePayment(){
             'language' => GoPay\Definition\Language::CZECH,
             'timeout' => 30
         ])
-        );
+    );
 }
 
     
