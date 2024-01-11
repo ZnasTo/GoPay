@@ -35,7 +35,7 @@ class Payment
         $this->buyerData = $buyerData;
         $this->returnURL = $returnURL;
 
-        $dotaz = Db::dotaz("INSERT into transakce
+        /*$dotaz = Db::dotaz("INSERT into transakce
         VALUES(NULL, '{$this->buyerData['oddeleni']}',
             '{$this->buyerData['jmeno']}', '{$this->buyerData['prijmeni']}', '{$this->buyerData['email']}',
             '{$this->buyerData['telefon']}', '{$this->buyerData['mesto']}', '{$this->buyerData['ulice']}', '{$this->buyerData['CP']}', '{$this->buyerData['PSC']}',
@@ -43,7 +43,7 @@ class Payment
         );");
         if($dotaz == 0) {
             return 'error 1'; 
-        }
+        }*/
 
         $this->createPayment();
 

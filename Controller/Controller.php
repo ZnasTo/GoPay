@@ -13,7 +13,9 @@ abstract class Controller {
     // Metoda pro vytisknutí pohledu
     public function printView(){
         extract($this->data);
-        require "View/{$this->view}.phtml";
+        if($this->view){
+            require "View/{$this->view}.phtml";
+        }
     }
 
     // Metoda pro přesměrování na danou URL
