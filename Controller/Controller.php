@@ -9,7 +9,9 @@ abstract class Controller {
 
     public function printView(){
         extract($this->data);
-        require "View/{$this->view}.phtml";
+        if($this->view){
+            require "View/{$this->view}.phtml";
+        }
     }
 
     public function redirect($url){
