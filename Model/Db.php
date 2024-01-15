@@ -45,6 +45,8 @@ class Db {
   public static function dotazSamotny($dotaz, $parametry = array()) {
 		$vysledek = self::dotazJeden($dotaz, $parametry);
 		return $vysledek[0];
+		
+		
 	}
 	
 	// Spustí dotaz a vrátí počet ovlivněných řádků
@@ -57,16 +59,30 @@ class Db {
 	
 	// Vloží do tabulky nový řádek jako data z asociativního pole
 	public static function vloz($tabulka, $parametry = array()) {  
-  // $_POST = ["x" => 3, "y" => 5]  -> array_keys($_POST) -> ["x", "y"]
-  // implode(", ", ["x", "y"]) -> "x, y"
-  // (?, ?)    // první otazník je pro hodnotu x, druhý pro y
 		return self::dotaz("
-      INSERT INTO $tabulka 
-      (". implode(', ', array_keys($parametry)). ") 
-      VALUES
-      (". str_repeat('?,', sizeOf($parametry)-1). "?)
-    ",
-			array_values($parametry));
+		INSERT INTO $tabulka 
+		(". implode(', ', array_keys($parametry)). ") 
+		VALUES
+		(". str_repeat('?,', sizeOf($parametry)-1). "?)
+		",
+				array_values($parametry));
+	}
+	// Vloží do tabulky nový řádek jako data z asociativního pole 
+	// a vrátí jeho id, jinak vrátí false
+	public static function vlozAVratId($dotaz, $parametry = array()) {
+		//nejedna se on vkladaci dotaz
+		if(!str_contains(strtoupper($dotaz),"INSERT")) {
+			return false;
+		}
+
+		$dotaz = self::dotaz($dotaz,$parametry);
+		
+		if($dotaz) {
+			return self::$spojeni->lastInsertId();
+		} else {
+			return $dotaz;
+		}
+		
 	}
 	
 	// Změní řádek v tabulce tak, aby obsahoval data z asociativního pole

@@ -280,6 +280,12 @@ class Formular
             $this->errorMSG = "částka není zadána";
             return false;
         }
+        // print $parameters["cas_zaplaceni"];
+        // print $parameters["zpusob_platby"];
+        // if (str_contains($parameters["zpusob_platby"], '"')) {
+        //     print "works";
+        //     return false;
+        // }
 
         return true;
     }

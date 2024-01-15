@@ -1,3 +1,26 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&family=Rubik:wght@300;400;500;600&display=swap');
+* {
+    font-family: 'Rubik', sans-serif;
+
+}
+
+
+/* odebrání šipek u input typu number */
+
+/* Chrome, Safari, Edge, Opera  */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+
 .text-large {
     font-size: 350%;
 }
@@ -5,7 +28,21 @@
 .text-nav {
     font-size: 150%;
 }
-
 .btn-zaplatit {
-
+    width: 50%;
+    height: 100px;
+    font-size: xx-large;
 }
+.btn-prihlasit {
+    height: 50px;
+    font-size: large;
+}
+
+.btn-formular {
+    width: 120px;
+    font-size: large;
+}
+
+
+
+

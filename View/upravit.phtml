@@ -5,21 +5,24 @@ window.addEventListener("DOMContentLoaded",function () {
 
     zaplaceno = document.querySelector("#zaplaceno");
     zaplacenoValue = zaplaceno.value;
+    var elements = document.querySelectorAll(".mizejici");
+    elements.forEach(function(element) {
+            if (zaplacenoValue === "0") {
+                element.style.display = 'none';
+            } else {
+                element.style.display = 'block';
+            }
+    });
     // nejaka funkce, ktera skryje ty dva prvky
     console.log(zaplacenoValue);
     document.querySelector("#zaplaceno").addEventListener("change", function() {
         // console.log(this.value);
         zaplacenoValue = this.value;
-        // Get all elements with the class name 'mizejici'.
-    var elements = document.querySelectorAll(".mizejici");
 
-        // Loop through each element and hide or show it based on zaplacenoValue.
         elements.forEach(function(element) {
             if (zaplacenoValue === "0") {
-                // If zaplacenoValue is "1", hide the element.
                 element.style.display = 'none';
             } else {
-                // Otherwise, show the element.
                 element.style.display = 'block';
             }
         });
@@ -40,11 +43,11 @@ window.addEventListener("DOMContentLoaded",function () {
         <div class="col-xl-1">
             
         </div>
-        <div class="col-xl-10 border rounded-5 p-3">
+        <div class="col-xl-10 border rounded-5 p-3 shadow">
             
             <div class="row text-center my-3">
         
-                <h2>Číslo Objednávky: <?=$this->data["transakce"]["id_transakce"]?></h2>
+                <h2>Číslo transakce: <?=$this->data["transakce"]["id_transakce"]?></h2>
             </div>
             <div class="border"></div>
             <form method="POST" action="upravit">
@@ -109,7 +112,7 @@ window.addEventListener("DOMContentLoaded",function () {
                     </div>
                 </div>
                 
-                <div class="row mt-3">
+                <div class="row mt-3 mb-3">
                     <div class="form-group col-md-6">
                         <label for="cas_vytvoreni" class="form-label">Čas Vytvoření: </label>
                         <input type="text" name="cas_vytvoreni" id="cas_vytvoreni" value="<?=$this->data["transakce"]["cas_vytvoreni"]?>" required readonly class="form-control">
@@ -121,25 +124,21 @@ window.addEventListener("DOMContentLoaded",function () {
                         </Select>
                     </div>
                 </div>
-                <div class="row mt-3">
+                <div class="row mb-3">
                     <div class="form-group col-md-6">
                         <label for="cas_zaplaceni" class="form-label mizejici">Čas Zaplacení: </label>
                             <input type="text" name="cas_zaplaceni" id="cas_zaplaceni" value="<?=$this->data["transakce"]["cas_zaplaceni"]?>" readonly class="form-control mizejici">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="zpusob_platby" class="form-label mizejici">Způsob platby: </label>
-                        <input type="text" name="zpusob_platby" id="zpusob_platby"value="<?=$this->data["transakce"]["zpusob_platby"]?>" class="form-control mizejici">
+                        <input type="text" name="zpusob_platby" id="zpusob_platby"  class="form-control mizejici" value="<?=$this->data["transakce"]["zpusob_platby"]?>">
                     </div>
                 </div>
+                <div class="border"></div>
                 <div class="row mt-3 mb-2">
-                    <div class="col-sm-4">
-                        <button href="sprava" class="btn btn-primary">Zpět</button>
-                    </div>
-                    <div class="col-sm-4">
-                
-                    </div>
-                    <div class="col-sm-4 text-end  ">
-                        <button type="submit" class="btn btn-primary ">Změnit</button>
+                    <div class="col-sm-12 d-flex justify-content-between  ">
+                        <button href="sprava" class="btn btn-primary btn-formular">Zpět</button>
+                        <button type="submit" class="btn btn-primary btn-formular">Změnit</button>
                     </div>
                 </div>   
             </form>

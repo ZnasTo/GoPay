@@ -18,18 +18,20 @@ class UpravitController extends Controller
                 $validniZpusobPlatby = true;
                 //nastaveni cas_zaplaceni a zpusob platby, ktere  jsou zavisle na tom, jestli byla objednavka zaplacena
                 if(!$dataZFormulare["byla_zaplacena"] && $dataZFormulare["zaplaceno"]){
+
                     $dataZFormulare["cas_zaplaceni"] = "cas_zaplaceni = NOW() ";  
-                    if(!isset($dataZFormulare["zpusob_platby"])){
+                    if(!isset($dataZFormulare["zpusob_platby"]) || empty($dataZFormulare["zpusob_platby"])){
                         $validniZpusobPlatby = false;
                         //TODO zakomponovat bud do validace nebo nejak proste vyhodit error
                     } else {
-                        $dataZFormulare["zpusob_platby"] = "zpusob_platby = '$dataZFormulare[zpusob_platby]'";
+                        print $dataZFormulare["zpusob_platby"];
+                        $dataZFormulare["zpusob_platby"] = "zpusob_platby = '$dataZFormulare[zpusob_platby]' ";
                     }
                 } else if(!$dataZFormulare["zaplaceno"]){
                     $dataZFormulare["cas_zaplaceni"] = "cas_zaplaceni = NULL ";
                     $dataZFormulare["zpusob_platby"] = "zpusob_platby = NULL ";
                 } else {
-                    $dataZFormulare["zpusob_platby"] = "zpusob_platby = '$dataZFormulare[zpusob_platby]'";
+                    $dataZFormulare["zpusob_platby"] = "zpusob_platby = '$dataZFormulare[zpusob_platby]' ";
                     $dataZFormulare["cas_zaplaceni"] = "cas_zaplaceni = STR_TO_DATE('$dataZFormulare[cas_zaplaceni]', '%d.%m.%Y %H:%i:%s')";
                 }
                 
@@ -44,7 +46,12 @@ class UpravitController extends Controller
                     WHERE id_transakce = '$dataZFormulare[id_transakce]'");
                 } else {
                     //TODO error handeling
+                    //TODO bude potreba nejak poresit, at te to pri erroru nepresmeruje
                     $error = $form->getErrorMSG();
+                    if($dataZFormulare["zpusob_platby"]) {
+                        $error = "nebyl zadán způsob platby";
+                    }
+                    // $_GET["id_transakce"] = $dataZFormulare["id_transakce"];
                     $this->redirect("sprava?=$error");
                 }
 
@@ -88,7 +95,9 @@ class UpravitController extends Controller
                 }
             } else {
                 // $test =  Formular::kontrolaDat($_POST);
+                // $_GET["id_transakce"] = $dataZFormulare["id_transakce"];
                 $this->redirect("sprava?=neco");
+                
             }
 
 
