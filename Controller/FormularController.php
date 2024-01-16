@@ -24,10 +24,8 @@ class FormularController extends Controller {
                 $this->data["stavObjednavky"] = "Objednávka nebyla zaplacena";
             
             } else {
-                //TODO updatnout hodnoty v databazi
                 print_r($platba->getIformation($id));
                 $informaceOPlatbe = $platba->getIformation($id);
-                // json_decode($platba->getIformation($id));
                 Db::dotaz("UPDATE transakce SET zaplaceno = 1,cas_zaplaceni = NOW(),zpusob_platby = '{$informaceOPlatbe['payment_instrument']}' WHERE id_transakce = '{$informaceOPlatbe['order_number']}'");
                 $this->redirect("zaplaceno");
             }
