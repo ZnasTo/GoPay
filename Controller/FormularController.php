@@ -1,13 +1,24 @@
 <?php
 class FormularController extends Controller {
     public function execute($parameters){
-        
-        $platba = new GoPayPayment;
+        //1 je hodnota odpovidajici konstante GOPAY ve tride Payment 
+        //je zde dana protoze mame jedninnou platebni branu(GOPAY)
+        $platebniBrana = 1;
+        //pro pripadnou zmenu platebni brany
+        switch ($platebniBrana) {
+            case Payment::GOPAY:
+                $platba = new GoPayPayment;
+                break;
+            
+            default:
+            $platba = new GoPayPayment;
+                break;
+        }
 
         if(isset($_GET["id"])){
             $this->view = "zaplatit";
             $id = $_GET["id"];
-            $this->data["idObjednavky"] = $id;
+            // $this->data["idObjednavky"] = $id;
             
             $stavObjednavky = $platba->getStatus($id);
 
@@ -23,10 +34,14 @@ class FormularController extends Controller {
             
                 $this->data["stavObjednavky"] = "Objednávka nebyla zaplacena";
             
-            } else {
-                print_r($platba->getIformation($id));
-                $informaceOPlatbe = $platba->getIformation($id);
-                Db::dotaz("UPDATE transakce SET zaplaceno = 1,cas_zaplaceni = NOW(),zpusob_platby = '{$informaceOPlatbe['payment_instrument']}' WHERE id_transakce = '{$informaceOPlatbe['order_number']}'");
+            } 
+            else {
+                //bude upravovat notificationConroller/Model/idk
+                // print_r($platba->getIformation($id));
+                // $informaceOPlatbe = $platba->getIformation($id);
+                // Db::dotaz("UPDATE transakce SET stav = '{$informaceOPlatbe['state']}' ,cas_zaplaceni = NOW(),
+                // zpusob_platby = '{$informaceOPlatbe['payment_instrument']}' 
+                // WHERE id_transakce = '{$informaceOPlatbe['order_number']}'");
                 $this->redirect("zaplaceno");
             }
         }
@@ -53,22 +68,28 @@ class FormularController extends Controller {
                     VALUES(NULL, '{$dataZFormulare['oddeleni']}',
                     '{$dataZFormulare['jmeno']}', '{$dataZFormulare['prijmeni']}', '{$dataZFormulare['email']}',
                     '{$dataZFormulare['telefon']}', '{$dataZFormulare['mesto']}', '{$dataZFormulare['ulice']}', '{$dataZFormulare['CP']}', '{$dataZFormulare['PSC']}',
-                    '{$dataZFormulare['castka']}', NULL, 0, NOW(), NULL,NULL
+                    '{$dataZFormulare['castka']}', NULL, NULL, NOW(), NULL,NULL
                 );"
                 );
 
                 if(is_bool($dotaz)) {
-                    // TODO error
+                    echo "error";
                 } else {
-                    // print($dotaz);
         
                     $dataZFormulare["oddeleni"] = "platebni_brana";
                     $dataZFormulare["cislo_objednavky"] = $dotaz;
+                    
+                    //v gopay ma castka i halere, proto musime k cislu pridat dve nuly
+                    $dataZFormulare["castka"] *= 100;
                     // print_r($dataZFormulare);
                     // if($kontrolaDat->kontrolaDatZaplatit($dataZFormulare)){
                     // $urlParametry = array();
                     $urlParametry["buyerData"] = $dataZFormulare;
                     $urlParametry["returnURL"] = "http://$_SERVER[HTTP_HOST]/formular";
+
+                    //TODO dát zde správný odkaz na notification_handler, asi to bude model
+                    $urlParametry["notificationURL"] = "http://$_SERVER[HTTP_HOST]/notification_handler";
+                        // print "http://$_SERVER[HTTP_HOST]/notification_handler";
 
                     // $url = $platba->getUrl($dataZFormulare,"http://$_SERVER[HTTP_HOST]/formular");
                     $url = $platba->getUrl($urlParametry);

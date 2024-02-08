@@ -38,14 +38,15 @@
 
 <div class="container-fluid ">
         <div class="row">
-                <nav class="navbar navbar-expand navbar-light navbar- bg-light text-uppercase fw-bold">
+                <nav class="navbar navbar-expand navbar-light navbar- bg-light text-uppercase fw-bold ">
                     <div class="nav navbar-nav text-nav">
                         <a id="uvod" class="nav-item nav-link" href="uvod" >Úvod</a>
-                        <a id="zaplatit" class="nav-item nav-link" href="formular">Zaplatit</a>
                         <?php 
                         if(($_SESSION["prihlasen"] == true)){
                             ?>  <a  id="sprava" class="nav-item nav-link" href="sprava">Správa</a> 
                         <?php } ?>
+                        <div class="border"></div>
+                            <a id="zaplatit" class="nav-item nav-link" href="formular">Zaplatit Demo</a>
                     </div>
                     <div class="nav navbar-nav ms-auto text-nav">
             

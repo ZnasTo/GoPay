@@ -23,6 +23,12 @@ class SpravaController extends Controller{
                 $idTransakce = $_GET["upravit"];
                 $this->redirect("upravit?id_transakce=$idTransakce");
             }
+
+            if (isset($_GET["request"])) {
+                $idTransakce = $_GET["request"];
+                $this->redirect("showrequest?id_transakce=$idTransakce");
+            }
+            
             
         }
         else{

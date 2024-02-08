@@ -18,7 +18,7 @@ class GoPayPayment extends Payment
 {   
 
     private $buyerData;
-    private $cisloObjednavky;
+    private $notificationURL;
     private $response;
     private $token;
     private $returnURL;
@@ -33,6 +33,7 @@ class GoPayPayment extends Payment
     public function getUrl($parameters){
         $this->buyerData = $parameters["buyerData"];
         $this->returnURL = $parameters["returnURL"];
+        $this->notificationURL = $parameters["notificationURL"];
         // $this->buyerData = $buyerData;
         // $this->returnURL = $returnURL;
 
@@ -87,7 +88,7 @@ class GoPayPayment extends Payment
         'payer' => [
             'default_payment_instrument' => PaymentInstrument::PAYMENT_CARD, 
             //     'default_payment_instrument' => PaymentInstrument::BANK_ACCOUNT,
-            'allowed_payment_instruments' => [PaymentInstrument::BANK_ACCOUNT,PaymentInstrument::PAYMENT_CARD,PaymentInstrument::BITCOIN],
+            'allowed_payment_instruments' => [PaymentInstrument::PAYMENT_CARD],
             //     'default_swift' => BankSwiftCode::FIO_BANKA,
             'allowed_swifts' => [BankSwiftCode::FIO_BANKA, BankSwiftCode::MBANK],
                 'contact' => ['first_name' => $this->buyerData["jmeno"],
@@ -139,7 +140,7 @@ class GoPayPayment extends Payment
         'callback' => [
                 // 'return_url' => 'http://localhost/GoPay/GoPay/View/checkout.php',
                 'return_url' => $this->returnURL,
-                // 'notification_url' => 'http://localhost/GoPay/GoPay/Controller/NotifyController.php' //hodne zajimava vec, sendne se kdykoli je status objednávky updatován
+                'notification_url' => 'http://idkneco.wz.cz/notification_handler.php'
         ],
         'lang' => Language::CZECH
 

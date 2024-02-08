@@ -29,10 +29,10 @@ date_default_timezone_set('Europe/Prague');
           <th>PSČ</th>
           <th>Způsob platby</th>
           <th>Částka</th>
-          <th>Zaplaceno</th>
+          <th>Stav</th>
           <th>Čas vytvoření</th>
           <th>Čas zaplaceni</th>
-          <th></th>
+          <th>Request</th>
         </tr>
       </thead>
   
@@ -51,20 +51,11 @@ date_default_timezone_set('Europe/Prague');
           <td><?= $radek['PSC']; ?></td>
           <td><?= $radek['zpusob_platby']; ?></td>
           <td><?= $radek['castka'] . "Kč"; ?></td>
-          <td><?php
-          if($radek['zaplaceno'] == true){
-            echo 'Ano';
-          } else {
-            echo 'Ne';
-          } 
-          ?></td>
+          <td><?= $radek['stav']; ?></td>
           <td><?=date("j.n.Y H:i:s", strtotime($radek['cas_vytvoreni'])); ?></td>
           <td><?php if($radek["cas_zaplaceni"] != NULL) echo(date("j.n.Y H:i:s", strtotime($radek['cas_zaplaceni']))); ?></td>
-      
-          <td>
-            <a href="<?=$this->view?>?upravit=<?= $radek["id_transakce"] ?>"><i class="bi bi-pencil-square fs-5"></i></a>
-            <a href="<?=$this->view?>?odstranit=<?=$radek["id_transakce"] ?>"><i class="bi bi-trash-fill text-danger fs-5 "></i></a>
-          </td>
+          <td><a href="<?=$this->view?>?request=<?= $radek["id_transakce"] ?>" class="link-underline">request</a></td>
+        
         </tr>
         <?php } ?>
       </tbody>
