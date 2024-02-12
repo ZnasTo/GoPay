@@ -1,3 +1,4 @@
+<!-- Pohled pro přihlášení do systému -->
 <div class="row pt-5 pb-5 text-center text-white bg-primary">
     <div class="col-12" >
 
@@ -29,7 +30,7 @@
                     <input type="password" name="heslo" id="heslo" required class="form-control" placeholder="Heslo">
                 </div>
                 <?php
-                // if(isset($this->data["error"]))
+                // Výpis error hlášky
                 if(strlen($this->data["error"]) != 0){
                     ?>
                     <div class="text-center  mt-2">

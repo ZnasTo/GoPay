@@ -1,16 +1,14 @@
 <?php
-
+// Třída pro správu přihlášení
 class LoginController extends Controller{
-    
-    
     public function execute($parameters)
     {   
-        //Zjisti jestli je uzivatel prihlasen, pokud ano presmeruje ho na uvod
+        // Zjistí jestli je uživatel přihlášen, pokud ano přesěruje ho na úvod
         if($_SESSION["prihlasen"] == true)
-            $this->redirect("uvod");
+            $this->redirect("mainpage");
             $this->view = "login";
 
-            //zprava pro uzivatele, kdyz zada neco spatne
+            //Zpravá pro uživatele, když něco zadá špatně
             $this->data["error"] = "";
 
             // generovani hesla
@@ -23,9 +21,9 @@ class LoginController extends Controller{
     
                 $login = new Login();
 
-                //overeni prihlaseni
-                if($login->prihlas($jmeno,$heslo)){
-                    $this->redirect("uvod");
+                // Ověří přihlašovací údaje, jinak vypíše error message
+                if($login->login($jmeno,$heslo)){
+                    $this->redirect("mainpage");
                 } else {
                     $this->data["error"] = $login->getErrorMsg(); 
                 }

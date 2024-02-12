@@ -1,10 +1,11 @@
 <?php 
-//abstraktni trida, ktera definuje vlastnosti pro platebni brany
+// Abstraktní třída definující vlastnosti pro platební brány
 abstract class Payment 
 {
-    // konstanta pro rozliseni platebnich bran (mame jenom jednu zatim)
+    // Konstanta pro rozlišení platebních bran (momentálně máme pouze GOPAY)
     const GOPAY = 1;
-    // abstraktni metody
+    
+    // Abstraktní metody
     abstract public function getStatus($parameters);
     abstract public function getIformation($parameters);
     abstract public function getUrl($parameters);

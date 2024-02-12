@@ -1,4 +1,4 @@
-
+<!-- Formulář pro PaymentDemo -->
 <div class="row pt-5 pb-5 text-center text-white bg-primary">
     <div class="col-12" >
         <h1 class="text-large" >Formulář Zaplacení</h1>
@@ -17,7 +17,7 @@
                 <h2>Dodací údaje:</h2>
             </div>
             <div class="border"></div>
-            <form method="POST" action="formular">
+            <form method="POST" action="paymentdemo">
                 <input type="text" name="oddeleni" id="oddeleni" required value="platebni_brana" hidden>
 
 
@@ -69,16 +69,24 @@
                         <label for="PSC" class="form-label">PSČ: </label>
                             <input type="number" name="PSC" id="PSC" required class="form-control">
                         </div>
+                    <!-- Výpis erroru -->
+                     <?php if(strlen($this->data["error"]) != 0){
+                    ?>
+                    <div class="text-center  mt-2">
+                        <p class="text-danger fw-semibold fst-italic  "><?=$this->data["error"]?></p>
+                    </div>
+                        <?php
+                    }
+                    ?>
                 </div>
-                <!-- <div class="border mt-3 mt-3"></div> -->
                 <div class="border mt-4"></div>
                 <div class="row mt-4 mb-2">
                     <div class="col-sm-12 d-flex justify-content-between  ">
-                        <button href="uvod" class="btn btn-primary btn-formular">Zpět</button>
+                        <a href="mainpage" class="btn btn-primary btn-formular">Zpět</a>
                         <button type="submit" class="btn btn-primary btn-formular">Pokračovat</button>
+                    </form>
                     </div>
                 </div>   
-            </form>
         </div>    
         <div class="col-xl-1">
             

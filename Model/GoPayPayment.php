@@ -1,11 +1,19 @@
 
 <?php
+// Třída pro práci s platební bránou gopay
 
+// Dokumentace GoPay api
+// https://doc.gopay.com/
+
+
+// Informace potřebné pro správnou funcki platební brány
 define("GO_ID","8565283375");
 define("CLIENT_ID","1167493503");
 define("CLIENT_SECERET","aeNk74bQ");
 define("URL_PRODEJNIHO_MISTA","http://www.ales.recman.cz");
 
+
+// Import potřebných GoPay tříd
 use GoPay\Definition\Language;
 use GoPay\Definition\Payment\Currency;
 use GoPay\Definition\Payment\PaymentInstrument;
@@ -13,7 +21,10 @@ use GoPay\Definition\Payment\BankSwiftCode;
 use GoPay\Definition\Payment\VatRate;
 use GoPay\Definition\Payment\PaymentItemType;
 
+
+// Připojení composer autoload souboru
 require("vendor/autoload.php");
+
 class GoPayPayment extends Payment
 {   
 
@@ -24,41 +35,25 @@ class GoPayPayment extends Payment
     private $returnURL;
 
 
-    function __construct(){
-    }
-
-    //pri uspesnem vytvoreni vrati url jinak vrati error
+    // Metoda vrací odkaz na platební bránu, jinak vrátí error
     //https://doc.gopay.cz/#error-scope
-    //error 1 nepovedlo se ulozit data do databaze
     public function getUrl($parameters){
         $this->buyerData = $parameters["buyerData"];
         $this->returnURL = $parameters["returnURL"];
         $this->notificationURL = $parameters["notificationURL"];
-        // $this->buyerData = $buyerData;
-        // $this->returnURL = $returnURL;
-
-        // $dotaz = Db::dotaz("INSERT into transakce
-        // VALUES(NULL, '{$this->buyerData['oddeleni']}',
-        //     '{$this->buyerData['jmeno']}', '{$this->buyerData['prijmeni']}', '{$this->buyerData['email']}',
-        //     '{$this->buyerData['telefon']}', '{$this->buyerData['mesto']}', '{$this->buyerData['ulice']}', '{$this->buyerData['CP']}', '{$this->buyerData['PSC']}',
-        //     '{$this->buyerData['castka']}', NULL, 0, NOW(), NULL
-        // );");
-        // if($dotaz == 0) {
-        //     return 'error 1'; 
-        // }
+        
 
         $this->createPayment();
 
 
     if($this->response->hasSucceed()){
-            // print $this->response->json['gw_url'];
             return $this->response->json['gw_url'];        
     }
     else{   
             return 'error '.  $this->response->statusCode;
         }
     }
-
+    // Metoda pro vrácení stavu objednávky
     public function getStatus($statusID){
         $this->initialisePayment();
         $response = $this->token->getStatus($statusID);
@@ -70,6 +65,7 @@ class GoPayPayment extends Payment
 
     }
 
+    // Metoda pro získání informací o objednávce
     public function getIformation($statusID){
         $this->initialisePayment();
         $response = $this->token->getStatus($statusID);
@@ -79,7 +75,7 @@ class GoPayPayment extends Payment
         return $responseBody;
 
     }
-
+    // Metoda pro vytvoření platby
     private function createPayment(){ 
         
        $this->initialisePayment();
@@ -150,6 +146,8 @@ class GoPayPayment extends Payment
     
     
 }
+
+// Metoda pro inicializaci platby
 private function initialisePayment(){
     $this->token = (
         GoPay\payments([
