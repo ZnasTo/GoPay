@@ -1,23 +1,25 @@
-
+<!-- Formulář pro PaymentDemo -->
 <div class="row pt-5 pb-5 text-center text-white bg-primary">
     <div class="col-12" >
-        <h1 class="text-large" >Formulář Zaplaceni</h1>
+        <h1 class="text-large" >Formulář Zaplacení</h1>
     </div>
 </div>
 
-<div class="container">
-    <div class="row mt-3 "> 
+<div class="container" >
+    <div class="row mt-3 pb-5"> 
         <div class="col-xl-1">
             
         </div>
-        <div class="col-xl-10 border rounded-5 p-3">
+        <div class="col-xl-10 border rounded-5 p-3 shadow">
             
             <div class="row text-center my-3">
         
                 <h2>Dodací údaje:</h2>
             </div>
             <div class="border"></div>
-            <form method="POST" action="formular">
+            <form method="POST" action="paymentdemo">
+                <input type="text" name="oddeleni" id="oddeleni" required value="platebni_brana" hidden>
+
 
                 <div class="row mt-3">
                     <div class="form-group col-md-6">
@@ -67,20 +69,24 @@
                         <label for="PSC" class="form-label">PSČ: </label>
                             <input type="number" name="PSC" id="PSC" required class="form-control">
                         </div>
+                    <!-- Výpis erroru -->
+                     <?php if(strlen($this->data["error"]) != 0){
+                    ?>
+                    <div class="text-center  mt-2">
+                        <p class="text-danger fw-semibold fst-italic  "><?=$this->data["error"]?></p>
+                    </div>
+                        <?php
+                    }
+                    ?>
                 </div>
-                <!-- <div class="border mt-3 mt-3"></div> -->
+                <div class="border mt-4"></div>
                 <div class="row mt-4 mb-2">
-                    <div class="col-sm-4">
-                        <button href="uvod" class="btn btn-primary">Zpět</button>
-                    </div>
-                    <div class="col-sm-4">
-                
-                    </div>
-                    <div class="col-sm-4 text-end  ">
-                        <button type="submit" class="btn btn-primary ">Pokračovat</button>
+                    <div class="col-sm-12 d-flex justify-content-between  ">
+                        <a href="mainpage" class="btn btn-primary btn-formular">Zpět</a>
+                        <button type="submit" class="btn btn-primary btn-formular">Pokračovat</button>
+                    </form>
                     </div>
                 </div>   
-            </form>
         </div>    
         <div class="col-xl-1">
             

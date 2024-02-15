@@ -4,99 +4,106 @@
 class Db {
 
 	// Databázové spojení
-  private static $spojeni;
+  private static $connection;
 
 	// Výchozí nastavení ovladače
-  private static $nastaveni = array(
+  private static $settings = array(
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 		PDO::ATTR_EMULATE_PREPARES => false,
 	);
 
 	// Připojí se k databázi pomocí daných údajů
-  public static function pripoj($server, $uzivatel, $heslo, $databaze)
+  public static function connect($server, $user, $password, $database)
   {
-	  if (!isset(self::$spojeni)) 
+	  if (!isset(self::$connection)) 
     {
-        $dsn = "mysql:host=$server;dbname=$databaze;charset=utf8";
-		self::$spojeni = new PDO(
+        $dsn = "mysql:host=$server;dbname=$database;charset=utf8";
+		self::$connection = new PDO(
 			$dsn,
-			$uzivatel,
-			$heslo,
-			self::$nastaveni
+			$user,
+			$password,
+			self::$settings
 		);
 	  }
 	}
 	
 	// Spustí dotaz a vrátí z něj první řádek
-  public static function dotazJeden($dotaz, $parametry = array()) {
-		  $navrat = self::$spojeni->prepare($dotaz);
-		  $navrat->execute($parametry);
-	  return $navrat->fetch();
+  public static function queryOne($query, $parameters = array()) {
+		$result = self::$connection->prepare($query);
+		$result->execute($parameters);
+	  	return $result->fetch();
 	}
 
 	// Spustí dotaz a vrátí všechny jeho řádky jako pole asociativních polí
-  public static function dotazVsechny($dotaz, $parametry = array()) {
-		$navrat = self::$spojeni->prepare($dotaz);
-		$navrat->execute($parametry);
-		return $navrat->fetchAll();
+  public static function queryAll($query, $parameters = array()) {
+		$result = self::$connection->prepare($query);
+		$result->execute($parameters);
+		return $result->fetchAll();
 	}
 	
 	// Spustí dotaz a vrátí z něj první sloupec prvního řádku
-  public static function dotazSamotny($dotaz, $parametry = array()) {
-		$vysledek = self::dotazJeden($dotaz, $parametry);
-		return $vysledek[0];
+  public static function queryAlone($query, $parameters = array()) {
+		$result = self::queryOne($query, $parameters);
+		return $result[0];
+		
 	}
 	
 	// Spustí dotaz a vrátí počet ovlivněných řádků
-	public static function dotaz($dotaz, $parametry = array()) {
-		$navrat = self::$spojeni->prepare($dotaz);
-		$navrat->execute($parametry);
-		return $navrat->rowCount();
+	public static function query($query, $parameters = array()) {
+		$result = self::$connection->prepare($query);
+		$result->execute($parameters);
+		return $result->rowCount();
 	}
 	
 	
 	// Vloží do tabulky nový řádek jako data z asociativního pole
-	public static function vloz($tabulka, $parametry = array()) {  
-  // $_POST = ["x" => 3, "y" => 5]  -> array_keys($_POST) -> ["x", "y"]
-  // implode(", ", ["x", "y"]) -> "x, y"
-  // (?, ?)    // první otazník je pro hodnotu x, druhý pro y
-		return self::dotaz("
-      INSERT INTO $tabulka 
-      (". implode(', ', array_keys($parametry)). ") 
-      VALUES
-      (". str_repeat('?,', sizeOf($parametry)-1). "?)
-    ",
-			array_values($parametry));
+	public static function insert($table, $parameters = array()) {  
+		return self::query("
+		INSERT INTO $table 
+		(". implode(', ', array_keys($parameters)). ") 
+		VALUES
+		(". str_repeat('?,', sizeOf($parameters)-1). "?)
+		",
+				array_values($parameters));
+	}
+	// Spustí dotaz a vrátí id nově vytvořeného záznamu, jinak vrátí false
+	public static function queryAndReturnId($query, $parameters = array()) {
+		//nejedna se on vkladaci dotaz
+		if(!str_contains(strtoupper($query),"INSERT")) {
+			return false;
+		}
+
+		$query = self::query($query,$parameters);
+		
+		if($query) {
+			return self::$connection->lastInsertId();
+		} else {
+			return $query;
+		}
+		
 	}
 	
 	// Změní řádek v tabulce tak, aby obsahoval data z asociativního pole
-	public static function zmen($tabulka, $hodnoty = array(), $podminka, $parametry = array()) {
-		return self::dotaz("UPDATE $tabulka SET ".
-		implode(' = ?, ', array_keys($hodnoty)).
-		" = ? " . $podminka,
-		array_merge(array_values($hodnoty), $parametry));
+	public static function change($table, $values = array(), $condition, $parameters = array()) {
+		return self::query("UPDATE $table SET ".
+		implode(' = ?, ', array_keys($values)).
+		" = ? " . $condition,
+		array_merge(array_values($values), $parameters));
 	}
 
-	public static function odstran($tabulka, $atribut = NULL, $hodnotaAtributu = NULL) {
+	// Maže záznamy
+	public static function delete($table, $atribute = NULL, $atributeValue = NULL) {
 		$sql = "
-			DELETE FROM $tabulka 
+			DELETE FROM $table 
 		";
-		if (!empty($atribut)) 
+		if (!empty($atribute)) 
 			$sql .= "
-			  WHERE $atribut = ?
+			  WHERE $atribute = ?
 			";
 		
-		return self::dotaz($sql,
-		!empty($atribut) ? [$hodnotaAtributu] : []);
+		return self::query($sql,
+		!empty($atribute) ? [$atributeValue] : []);
 	}
 	
-	// Vrací ID posledně vloženého záznamu
-	public static function idPoslednihoVlozeneho()
-	{
-		return intval(Db::dotazJeden(
-            "SELECT MAX(id_transakce) 
-            FROM transakce;
-            ")) + 1;
 
-	}
 }

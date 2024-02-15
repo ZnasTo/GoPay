@@ -1,5 +1,8 @@
 <?php
+// Start SESSION
 session_start();
+
+// Pripojení tříd
 function autoloader($className) {
     if (str_ends_with($className, "Controller")) {
         
@@ -11,12 +14,11 @@ function autoloader($className) {
     }
 }
 spl_autoload_register("autoloader"); 
-// pokud se v kodu obejvi trida ktera jeste nebyla nactena
-//spl_autoload_register se ji pokusi nacist
-//tudiz nemusime vsude davat require
+
+// Nastavení přihlášení uživatele
 if(!isset($_SESSION["prihlasen"]))
     $_SESSION["prihlasen"] = false;
 
+// Připojení databáze
+Db::connect("localhost", "root", "", "mp_gopay");
 
-Db::pripoj("localhost", "root", "", "mp_gopay");
-?>

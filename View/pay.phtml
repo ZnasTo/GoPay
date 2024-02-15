@@ -1,0 +1,31 @@
+<!-- pohled pro PaymentDemo -->
+<div class="row pt-5 pb-5 text-center text-white bg-primary">
+        <div class="col-12" >
+            <h1 class="text-large" >Zaplatit Objednávku</h1>
+        </div>
+</div>
+<div class="container-md bg-light p-2">
+    <div class="row py-3 text-center ">
+        <div class="col-12">
+            <h2>Po zmáčknutí budete přesměrování na platební bránu</h2>
+        </div>
+    </div>
+
+    <!-- Výpis stavu objednávky -->
+    <?php if(isset($state)) { ?>
+        <p><?= $this->data["stavObjednavky"] ?></p>
+    <?php }?>
+
+    
+    <div class="row text-center " >
+        <div class="col-12">
+            <form action="<?=$this->data["gopay_url"]?>" method="post" class="text-center ">
+            <button name="pay" type="submit" class="btn btn-primary btn-lg btn-zaplatit" >Zaplatit</button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+    

@@ -1,3 +1,4 @@
+<!-- Pohled pro přihlášení do systému -->
 <div class="row pt-5 pb-5 text-center text-white bg-primary">
     <div class="col-12" >
 
@@ -21,7 +22,7 @@
             <form  method="post" >
                 <div class=" row mt-3">
                     <label for="jmeno" class="form-label">Zadej jméno: </label>
-                    <input type="text" name="jmeno" id="jmeno" required class="form-control" placeholder="Jmeno">
+                    <input type="text" name="jmeno" id="jmeno" required class="form-control" placeholder="Jméno">
                 </div>
         
                 <div class=" row mt-3">
@@ -29,7 +30,7 @@
                     <input type="password" name="heslo" id="heslo" required class="form-control" placeholder="Heslo">
                 </div>
                 <?php
-                // if(isset($this->data["error"]))
+                // Výpis error hlášky
                 if(strlen($this->data["error"]) != 0){
                     ?>
                     <div class="text-center  mt-2">
@@ -38,8 +39,10 @@
                         <?php
                     }
                     ?>
+            <div class="border mt-4"></div>
+                  
                 <div class="row mt-4 mb-2" text-center >
-                    <input type="submit" value="Prihlasit se" class="btn btn-primary ">
+                    <input type="submit" value="Prihlasit se" class="btn btn-primary btn-prihlasit">
                 </div>
             </form>
            
