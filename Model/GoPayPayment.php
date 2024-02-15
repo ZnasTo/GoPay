@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1614c42 (upgrade)
 <?php
 // Třída pro práci s platební bránou gopay
 
@@ -60,10 +63,15 @@ class GoPayPayment extends Payment
         if ($response->hasSucceed()) {
             $responseBody = $response->json;
             $paymentStatus = $responseBody['state'];
+<<<<<<< HEAD
             return $paymentStatus;
         } else {
             return false;
         }
+=======
+        }
+        return $paymentStatus;
+>>>>>>> 1614c42 (upgrade)
 
     }
 
@@ -73,10 +81,15 @@ class GoPayPayment extends Payment
         $response = $this->token->getStatus($statusID);
         if ($response->hasSucceed()) {
             $responseBody = $response->json;
+<<<<<<< HEAD
             return $responseBody;
         } else {
             return false;
         }
+=======
+        }
+        return $responseBody;
+>>>>>>> 1614c42 (upgrade)
 
     }
     // Metoda pro vytvoření platby
@@ -167,5 +180,9 @@ private function initialisePayment(){
 }
 
     
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> 1614c42 (upgrade)
