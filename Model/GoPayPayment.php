@@ -60,8 +60,10 @@ class GoPayPayment extends Payment
         if ($response->hasSucceed()) {
             $responseBody = $response->json;
             $paymentStatus = $responseBody['state'];
+            return $paymentStatus;
+        } else {
+            return false;
         }
-        return $paymentStatus;
 
     }
 
@@ -71,8 +73,10 @@ class GoPayPayment extends Payment
         $response = $this->token->getStatus($statusID);
         if ($response->hasSucceed()) {
             $responseBody = $response->json;
+            return $responseBody;
+        } else {
+            return false;
         }
-        return $responseBody;
 
     }
     // Metoda pro vytvoření platby

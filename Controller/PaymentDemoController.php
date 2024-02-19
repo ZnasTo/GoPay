@@ -24,6 +24,8 @@ class PaymentDemoController extends Controller {
 
             // Získá stav platby
             $paymentState = $payment->getStatus($id);
+            
+            
 
             $this->data["stavObjednavky"] = $paymentState;
             
