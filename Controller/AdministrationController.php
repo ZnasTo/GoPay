@@ -6,18 +6,11 @@ class AdministrationController extends Controller{
         if($_SESSION["prihlasen"] == true){
 
             // Dotaz pro ziskani dat z databaze
-            $transaction = Db::queryAll(" SELECT *
+            $transactions = Db::queryAll(" SELECT *
             FROM transakce;
             ");
 
-            // Odstranění záznamu
-            if (isset($_GET["odstranit"])) {
-                $transactionId = $_GET["odstranit"];
-                Db::delete("transakce","id_transakce",$transactionId);; 
-                $this->redirect("administration");
-            }
-
-            $this->data["transakce"] = $transaction;
+            $this->data["transakce"] = $transactions;
             $this->view = "administration";
 
             // Přesměrování na výpis requestu
