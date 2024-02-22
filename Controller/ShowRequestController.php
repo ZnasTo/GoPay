@@ -3,13 +3,14 @@
 class ShowRequestController extends Controller
 {
     public function execute($parameters) {
-        // Kontrola jestli je zadané id transakce
-        if(isset($_GET["id_transakce"])) {
 
-            $id = $_GET["id_transakce"];
 
-            // Kontrola přihlášení uživatele
-            if($_SESSION["prihlasen"]==true) {
+        if($_SESSION["prihlasen"] == true){
+            // Kontrola jestli je zadané id transakce
+            if(isset($_GET["id_transakce"])) {
+    
+                $id = $_GET["id_transakce"];
+    
                 $this->view = "showRequest";
                 $result = Db::queryOne("SELECT request 
                     FROM transakce 
@@ -17,11 +18,15 @@ class ShowRequestController extends Controller
                 );
                 
                 $this->data["request"] = $result["request"];
-
+    
+            } else {
+                // Přesměrování zpátky na správu
+                $this->redirect("administration");
             }
-        } else {
-            // Přesměrování zpátky na správu
-            $this->redirect("administration");
+        }
+        else{
+            // Přesměrování na login
+            $this->redirect("login");
         }
 
     }
