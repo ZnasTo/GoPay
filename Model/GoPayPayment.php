@@ -1,4 +1,10 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1614c42 (upgrade)
+=======
+>>>>>>> ddb5aa3ad6c1968ad8680ebff0da92cd876d6b6f
 <?php
 // Třída pro práci s platební bránou gopay
 
@@ -149,6 +155,8 @@ class GoPayPayment extends Payment
     
     
     
+    }   
+<<<<<<< HEAD
 }
 
 // Metoda pro inicializaci platby
@@ -168,3 +176,46 @@ private function initialisePayment(){
 
     
 }
+
+<<<<<<< HEAD
+// Metoda pro inicializaci platby
+private function initialisePayment(){
+    $this->token = (
+        GoPay\payments([
+            'goid' => GO_ID,
+            'clientId' => CLIENT_ID,
+            'clientSecret' => CLIENT_SECERET,
+            'gatewayUrl' => 'https://gw.sandbox.gopay.com/',
+            'scope' => GoPay\Definition\TokenScope::ALL,
+            'language' => GoPay\Definition\Language::CZECH,
+            'timeout' => 30
+        ])
+        );
+}
+=======
+
+    // Metoda pro inicializaci platby
+    private function initialisePayment(){
+        $this->token = (
+            GoPay\payments([
+                'goid' => GO_ID,
+                'clientId' => CLIENT_ID,
+                'clientSecret' => CLIENT_SECERET,
+                'gatewayUrl' => 'https://gw.sandbox.gopay.com/',
+                'scope' => GoPay\Definition\TokenScope::ALL,
+                'language' => GoPay\Definition\Language::CZECH,
+                'timeout' => 30
+            ])
+            );
+    }
+>>>>>>> ddb5aa3ad6c1968ad8680ebff0da92cd876d6b6f
+
+    
+<<<<<<< HEAD
+}
+
+=======
+}
+>>>>>>> 1614c42 (upgrade)
+=======
+>>>>>>> ddb5aa3 (fix spatneho merge)
