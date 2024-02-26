@@ -1,6 +1,6 @@
 <?php
 // Třída pro zpracování formuláře ukázkového dema
-class PaymentDemoController extends Controller {
+class PaymentdemoController extends Controller {
     public function execute($parameters){
         $this->data["error"] = "";
         // Hodnota 1 odpovídá konstantě GOPAY ve třídě Payment 
