@@ -1,6 +1,6 @@
 <?php
 // Třída pro úvodní stránku
-class MainPageController extends Controller{
+class MainpageController extends Controller{
     public function execute($parameters)
     {
         $this->view = "mainPage";
