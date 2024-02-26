@@ -1,6 +1,6 @@
 <?php
 // Třída pro vypsání requestu, který přišel na naše api
-class ShowRequestController extends Controller
+class ShowrequestController extends Controller
 {
     public function execute($parameters) {
 
