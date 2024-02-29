@@ -64,7 +64,7 @@ class PaymentdemoController extends Controller {
                         VALUES(NULL, '{$formData['oddeleni']}',
                         '{$formData['jmeno']}', '{$formData['prijmeni']}', '{$formData['email']}',
                         '{$formData['telefon']}', '{$formData['mesto']}', '{$formData['ulice']}', '{$formData['CP']}', '{$formData['PSC']}',
-                        '{$formData['castka']}', NULL, NULL, NOW(), NULL,NULL
+                        '{$formData['castka']}', NULL, NULL, NOW(), NULL,NULL, NULL
                         );"
                     );
                     // Pokud je výsledek boolean, došlo k chybě, přesměruje uživatele na error
