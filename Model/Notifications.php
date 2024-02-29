@@ -15,7 +15,7 @@ class Notifications {
 
     // $status = $payment->getStatus($paymentId);
 
-    $paymentInformation = $payment->getIformation($paymentId);
+    $paymentInformation = $payment->getInformation($paymentId);
     if (!is_bool($paymentInformation)) {
         $paymentState = strtoupper($paymentInformation['state']);
         

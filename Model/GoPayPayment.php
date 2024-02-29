@@ -68,7 +68,7 @@ class GoPayPayment extends Payment
     }
 
     // Metoda pro získání informací o objednávce
-    public function getIformation($statusID){
+    public function getInformation($statusID){
         $this->initialisePayment();
         $response = $this->token->getStatus($statusID);
         if ($response->hasSucceed()) {

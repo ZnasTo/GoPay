@@ -7,7 +7,7 @@ abstract class Payment
     
     // Abstraktní metody
     abstract public function getStatus($parameters);
-    abstract public function getIformation($parameters);
+    abstract public function getInformation($parameters);
     abstract public function getUrl($parameters);
 
     
