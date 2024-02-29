@@ -20,5 +20,5 @@ if(!isset($_SESSION["prihlasen"]))
     $_SESSION["prihlasen"] = false;
 
 // Připojení databáze
-Db::connect("localhost", "root", "", "mp_gopay");
+Db::connect("localhost", "root", "", "platby");
 
