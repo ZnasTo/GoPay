@@ -10,6 +10,9 @@ class NotificationController extends Controller
 
             // Funkce upraví stav objednávky
             Notifications::updateState($paymentId);
+
+            // Funkce odešle notifikaci jinému oddělení
+            Notifications::sendNotification($paymentId);
            
         }
     }
