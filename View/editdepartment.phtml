@@ -1,0 +1,29 @@
+<!-- Formulář pro úprau oddělení -->
+<div class="row pt-5 pb-5 text-center text-white bg-primary">
+  <div class="col-12" >
+    <h1 class="text-large">Správa Oddělení</h1>
+  </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center pt-3 pb-3">Úprava oddělení</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form method="post" action="editdepartment?id=<?= $oddeleni["nazev"] ?>">
+                <div class="form-group">
+                    <label for="nazev">Název oddělení</label>
+                    <input type="text" class="form-control" id="nazev" name="nazev" value="<?= $oddeleni["nazev"] ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="text" class="form-control" id="url" name="url" value="<?= $oddeleni["url"] ?>">
+                </div>
+                <input type="submit" class="btn btn-primary" name="submit" value="Upravit">
+            </form>
+        </div>
+    </div>
+</div>
