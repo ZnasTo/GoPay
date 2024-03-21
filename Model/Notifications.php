@@ -54,7 +54,7 @@ class Notifications {
             $cisloObjednavky = Db::queryOne("SELECT cislo_objednavky FROM transakce WHERE id_transakce={$paymentInformation['order_number']}");
 
             // ziskani url na kterou se ma poslat notifikace
-            $url = Db::queryOne("SELECT url FROM oddeleni WHERE id_oddeleni={$department['oddeleni']}");
+            $url = Db::queryOne("SELECT notification_url FROM oddeleni WHERE id_oddeleni={$department['oddeleni']}");
 
             // odeslani notifikace
 
