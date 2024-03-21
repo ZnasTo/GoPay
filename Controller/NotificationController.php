@@ -3,7 +3,7 @@
 class NotificationController extends Controller
 {
     public function execute($parameters) {
-        $this->view = "mainPage";
+        $this->view = "notification";
         // Kontrola jestli je nastaven parametr id
         if (isset($_GET['id'])) {
             $paymentId = $_GET['id'];
