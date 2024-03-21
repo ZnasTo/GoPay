@@ -10,7 +10,8 @@ class EditdepartmentController extends Controller
                 if(isset($_POST["submit"])){
                     $nazev = $_POST["nazev"];
                     $url = $_POST["url"];
-                    Db::query("UPDATE oddeleni SET nazev = '$nazev', url = '$url' WHERE nazev LIKE '$id'");
+                    $notification_url = $_POST["notification_url"];
+                    Db::query("UPDATE oddeleni SET nazev = '$nazev', url = '$url', notification_url = '$notification_url' WHERE nazev LIKE '$id'");
                     $this->redirect("oddeleni");
                 }
             }

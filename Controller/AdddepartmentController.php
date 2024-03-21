@@ -7,7 +7,8 @@ class AdddepartmentController extends Controller
             if(isset($_POST["submit"])){
                 $nazev = $_POST["nazev"];
                 $url = $_POST["url"];
-                Db::query("INSERT INTO oddeleni (nazev, url) VALUES ('$nazev', '$url')");
+                $notification_url = $_POST["notification_url"];
+                Db::query("INSERT INTO oddeleni (nazev, url, notification_url) VALUES ('$nazev', '$url', '$notification_url')");
                 $this->redirect("oddeleni");
             }
         }
