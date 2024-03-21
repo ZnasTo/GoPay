@@ -24,13 +24,16 @@ class Notifications {
 
             // Vloží záznam o notifikaci do databáze
             Db::query("INSERT INTO gopaynotifikace VALUES (NULL,'$paymentState',NOW(), '{$paymentInformation['order_number']}')");
-            
+
             // Pokud je objednávka zaplacena nastaví čas zaplacení
             if (str_contains($paymentState,'PAID')) {
                 Db::query("UPDATE transakce SET cas_zaplaceni=NOW(),zpusob_platby='{$paymentInformation['payment_instrument']}' WHERE id_transakce={$paymentInformation['order_number']}");
         
             }
-        } 
+        } else {
+            $errorMsg = "Nastala chyba " . date('Y-m-d H:i:s') . "$paymentInformation";
+            Db::query("INSERT INTO notifikaceError VALUES (NULL,'$errorMsg')");
+        }
     }
 
     // Oderslání změny stavu objednávky jinemu oddeleni
