@@ -52,21 +52,32 @@ class ApiController extends Controller {
         } else {    
             if(isset($_GET["email"]) && isset($_GET["castka"]) && isset($_GET["cislo_objednavky"])) {    
                 $udaje = array();
-                foreach ($_GET as $key => $value) {
-                    $udaje[$key] = $value;
-                }
+
+                $udaje["email"] = $_GET["email"];
+                $udaje["castka"] = $_GET["castka"];
+                $udaje["cislo_objednavky"] = $_GET["cislo_objednavky"];
+                $udaje["jmeno"] = $_GET["jmeno"];
+                $udaje["prijmeni"] = $_GET["prijmeni"];
+                $udaje["telefon"] = $_GET["telefon"];
+                $udaje["mesto"] = $_GET["mesto"];
+                $udaje["ulice"] = $_GET["ulice"];
+                $udaje["CP"] = $_GET["CP"];
+                $udaje["PSC"] = $_GET["PSC"];
+                $udaje["oddeleni"] = $_GET["oddeleni"];
+                
+
                 //hodit data do database a vratit ID pokud nejsou nastaveny dat null
                 $query = Db::queryAndReturnId(
                     "INSERT INTO transakce
                     VALUES(NULL, '{$udaje['oddeleni']}',
-                    '".$udaje['jmeno']?$udaje['jmeno']:null."', '".$udaje['prijmeni']??null."', '{$udaje['email']}',
-                    '".$udaje['telefon']??null."', '".$udaje['mesto']??null."', '".$udaje['ulice']??null."', '".$udaje['CP']??null."', '".$udaje['PSC']??null."',
+                    '{$udaje['jmeno']}', '{$udaje['prijmeni']}', '{$udaje['email']}',
+                    '{$udaje['telefon']}', '{$udaje['mesto']}', '{$udaje['ulice']}', '{$udaje['CP']}', '{$udaje['PSC']}',
                     '{$udaje['castka']}', NULL, NULL, NOW(), NULL,NULL, {$udaje['cislo_objednavky']}
                     );"
                 );
                 print $query;
                 if(is_bool($query)) {
-                    $this->redirect("error");
+                    //$this->redirect("error");
                 } else {
                     $udaje["cislo_objednavky"] = $query;
                     $urlParameters["buyerData"] = $udaje;
@@ -80,7 +91,7 @@ class ApiController extends Controller {
                     $query = "SELECT url FROM oddeleni WHERE nazev = '$udaje[oddeleni]'";
                     $url = Db::queryOne($query);
                     if(is_bool($query)){
-                        $this->redirect("error");
+                        //$this->redirect("error");
                     }
                     else{
                         $url = $url."?error=platbu_se_nepodařilo_vytvořit";
