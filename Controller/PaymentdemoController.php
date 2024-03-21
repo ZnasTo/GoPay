@@ -32,9 +32,9 @@ class PaymentdemoController extends Controller {
             // Pokud není objednávka zaplacena získá odkaz na platební branu 
             // a nastaví zprávu pro uživatele
             if($paymentState != "PAID"){
-                $paymentIformations = $payment->getIformation($id);
+                $paymentInformations = $payment->getInformation($id);
 
-                $this->data["gopay_url"] = $paymentIformations["gw_url"];
+                $this->data["gopay_url"] = $paymentInformations["gw_url"];
                 $this->data["stavObjednavky"] = "Objednávka nebyla zaplacena";
             } 
             else {

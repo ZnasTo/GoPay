@@ -21,7 +21,7 @@ class ApiController extends Controller {
 
         if (isset($_GET["id"])) {
             $id = $_GET["id"];
-            $paymentState = $payment->getIformation($id);
+            $paymentState = $payment->getInformation($id);
             //get transaction information (oddeleni) from our database
             $query = "SELECT oddeleni, cislo_objednavky FROM transakce WHERE id_transakce = $paymentState[order_number]";
             $vysledek = Db::queryOne($query);
