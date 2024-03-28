@@ -50,39 +50,64 @@ class ApiController extends Controller {
 
 
         } else {    
-            if(isset($_GET["email"]) && isset($_GET["castka"]) && isset($_GET["cislo_objednavky"])) {    
+            if(isset($_GET["email"]) && isset($_GET["castka"]) && isset($_GET["cislo_objednavky"]) && isset($_GET["oddeleni"])) {    
                 $udaje = array();
 
                 $udaje["email"] = $_GET["email"];
                 $udaje["castka"] = $_GET["castka"];
                 $udaje["cislo_objednavky"] = $_GET["cislo_objednavky"];
-                $udaje["jmeno"] = $_GET["jmeno"];
-                $udaje["prijmeni"] = $_GET["prijmeni"];
-                $udaje["telefon"] = $_GET["telefon"];
-                $udaje["mesto"] = $_GET["mesto"];
-                $udaje["ulice"] = $_GET["ulice"];
-                $udaje["CP"] = $_GET["CP"];
-                $udaje["PSC"] = $_GET["PSC"];
+                $udaje["jmeno"] = $_GET["jmeno"]??null;
+                $udaje["prijmeni"] = $_GET["prijmeni"]??null;
+                $udaje["telefon"] = $_GET["telefon"]??null;
+                $udaje["mesto"] = $_GET["mesto"]??null;
+                $udaje["ulice"] = $_GET["ulice"]??null;
+                $udaje["CP"] = $_GET["CP"]??null;
+                $udaje["PSC"] = $_GET["PSC"]??null;
                 $udaje["oddeleni"] = $_GET["oddeleni"];
+
+                //castka poslední dve cisla jsou desetiná část
+                $castka = $udaje["castka"]/100;
+
+                $request=$_SERVER['QUERY_STRING'];
+                //log to console
+                //print $request;
                 
 
                 //hodit data do database a vratit ID pokud nejsou nastaveny dat null
-                $query = Db::queryAndReturnId(
+                /*$query = Db::queryAndReturnId(
                     "INSERT INTO transakce
                     VALUES(NULL, '{$udaje['oddeleni']}',
                     '{$udaje['jmeno']}', '{$udaje['prijmeni']}', '{$udaje['email']}',
                     '{$udaje['telefon']}', '{$udaje['mesto']}', '{$udaje['ulice']}', '{$udaje['CP']}', '{$udaje['PSC']}',
-                    '{$udaje['castka']}', NULL, NULL, NOW(), NULL,NULL, {$udaje['cislo_objednavky']}
+                    '{$castka}', NULL, NULL, NOW(), NULL,NULL, {$udaje['cislo_objednavky']}
                     );"
-                );
-                print $query;
+                );*/
+
+                $query = DB::queryAndReturnId(
+                    'INSERT INTO transakce VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,NOW(),NULL,?,?)',
+                    [
+                        $udaje['oddeleni'],
+                        $udaje['jmeno'],
+                        $udaje['prijmeni'],
+                        $udaje['email'],
+                        $udaje['telefon'],
+                        $udaje['mesto'],
+                        $udaje['ulice'],
+                        $udaje['CP'],
+                        $udaje['PSC'],
+                        $udaje['castka'],
+                        $request,
+                        $udaje['cislo_objednavky']
+                    ]);
+
+                //print $query;
                 if(is_bool($query)) {
                     //$this->redirect("error");
                 } else {
                     $udaje["cislo_objednavky"] = $query;
                     $urlParameters["buyerData"] = $udaje;
                     $urlParameters["returnURL"] = "http://$_SERVER[HTTP_HOST]/Api?brana=$platebniBrana";
-                    $urlParameters["notificationURL"] = "http://$_SERVER[HTTP_HOST]/Model/Notifications";
+                    $urlParameters["notificationURL"] = "http://$_SERVER[HTTP_HOST]/Notification";
                     $url = $payment->getUrl($urlParameters);
                 }
 
