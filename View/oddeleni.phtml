@@ -31,6 +31,10 @@
                     <label for="notification_url">Notifikační URL</label>
                     <input type="text" class="form-control" id="notification_url" name="notification_url">
                 </div>
+                <div class="form-group>
+                    <label for="api_token">API token</label>
+                    <input type="text" class="form-control" id="api_token" name="api_token">
+                </div>
                 <input type="submit" class="btn btn-primary" name="submit" value="Přidat">
             </form>
         </div>
@@ -47,6 +51,7 @@
           <th>oddělení</th>
           <th>URL</th>
           <th>Notifikační URL</th>
+          <th>API token</th>
           <th>Upravy</th>
         </tr>
       </thead>
@@ -58,6 +63,7 @@
             <td><?= $radek['nazev']; ?></td>
             <td><?= $radek['url']; ?></td>
             <td><?= $radek['notification_url']; ?></td>
+            <td><?= $radek['api_token']; ?></td>
             <td>
                 <a href="editdepartment?id=<?= $radek['nazev'] ?>" class="btn btn-primary">Upravit</a>
                 <a href="deletedepartment?id=<?= $radek['nazev'] ?>" class="btn btn-danger">Smazat</a>
