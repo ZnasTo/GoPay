@@ -96,7 +96,6 @@ class ApiController extends Controller {
                 $request=$_SERVER['QUERY_STRING'];
                 //log to console
                 //print $request;
-                
 
                 //hodit data do database a vratit ID pokud nejsou nastaveny dat null
                 $query = Db::queryAndReturnId(
