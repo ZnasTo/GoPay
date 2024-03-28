@@ -14,7 +14,8 @@ class ShowtokenController extends Controller
                 $this->view = "showToken";
                 $result = Db::queryOne("SELECT api_token
                     FROM oddeleni 
-                    WHERE nazev = '$oddeleni'"
+                    WHERE nazev = ?", 
+                    array($oddeleni)
                 );
                 
                 $this->data["api_token"] = $result["api_token"];

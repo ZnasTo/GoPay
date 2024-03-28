@@ -106,18 +106,18 @@ class ApiController extends Controller {
                 //print $request;
 
                 //hodit data do database a vratit ID pokud nejsou nastaveny dat null
-                $query = Db::queryAndReturnId(
+                /*$query = Db::queryAndReturnId(
                     "INSERT INTO transakce
                     VALUES(NULL, '{$udaje['oddeleni']}',
                     '{$udaje['jmeno']}', '{$udaje['prijmeni']}', '{$udaje['email']}',
                     '{$udaje['telefon']}', '{$udaje['mesto']}', '{$udaje['ulice']}', '{$udaje['CP']}', '{$udaje['PSC']}',
                     '{$castka}', NULL, NULL, NOW(), NULL, '{$request}', {$udaje['cislo_objednavky']}
                     );"
-                );
+                );*/
 
-                /*$query = DB::queryAndReturnId(
-                    'INSERT INTO transakce VALUES(NULL,?,?,?,?,?,?,?,?,?,?,?,?,NULL,NULL,NOW(),NULL,?,?)',
-                    [
+                $query = DB::queryAndReturnId(
+                    'INSERT INTO transakce VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, NULL, NOW(), NULL, ?, ?)',
+                    array(
                         $udaje['oddeleni'],
                         $udaje['jmeno'],
                         $udaje['prijmeni'],
@@ -127,10 +127,11 @@ class ApiController extends Controller {
                         $udaje['ulice'],
                         $udaje['CP'],
                         $udaje['PSC'],
-                        $udaje['castka'],
+                        $castka,
                         $request,
                         $udaje['cislo_objednavky']
-                    ]);*/
+                    )
+                );
 
                 //print $query;
                 if(is_bool($query)) {

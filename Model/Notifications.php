@@ -40,41 +40,49 @@ class Notifications {
 
     public static function sendNotification($paymentId) {
         $payment = new GoPayPayment;
+
+        // $status = $payment->getStatus($paymentId);
+
         $paymentInformation = $payment->getInformation($paymentId);
         if (!is_bool($paymentInformation)) {
-            $paymentState = strtoupper($paymentInformation['state']);
-
             // ziskani oddeleni ke kteremu patri objednavka
-            $department = Db::queryOne("SELECT oddeleni FROM transakce WHERE id_transakce={$paymentInformation['order_number']}");
+            $query = "SELECT oddeleni, cislo_objednavky FROM transakce WHERE id_transakce = {$paymentInformation['order_number']}";
+            $vysledek = Db::queryOne($query);
 
-            $department = $department['oddeleni'];
-
-            if ($department == "platebni_brana") {
+            if($vysledek == 1){
                 return;
             }
 
-            //ziskani cisla objednavky z databaze
-            $cislo_objednavky = Db::queryOne("SELECT cislo_objednavky FROM transakce WHERE id_transakce={$paymentInformation['order_number']}");
+            $department = $vysledek["oddeleni"];
+            $cislo_objednavky = $vysledek["cislo_objednavky"];
+
+            if($department == "platebni_brana"){
+                return;
+            }
 
             // ziskani url na kterou se ma poslat notifikace
-            $queryResult = Db::queryOne("SELECT notification_url, api_token FROM oddeleni WHERE id_oddeleni={$department['oddeleni']}");
+            $query = "SELECT notification_url, api_token FROM oddeleni WHERE nazev = '{$department}'";
+            $queryResult = Db::queryOne($query);
 
-            if ($queryResult == 1) {
+            if($queryResult == 1){
                 return;
             }
 
             $apiToken = $queryResult["api_token"];
-            $url = $queryResult["notification_url"];
+            $notificationURL = $queryResult["notification_url"];
             //send data to the correct department
             //send token in the header
+
+
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
+
+            curl_setopt($ch, CURLOPT_URL, $notificationURL);
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, 
                 HTTP_BUILD_QUERY(array(
                     "id" => $cislo_objednavky, 
-                    "stav" => $paymentState['state'], 
-                    "castka" => $paymentState['amount']
+                    "stav" => $paymentInformation['state'], 
+                    "castka" => $paymentInformation['amount']
                 ))
             );
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

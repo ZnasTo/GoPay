@@ -8,8 +8,10 @@ class RedirectController extends Controller {
     // Metoda pro provedení controlleru
     public function execute($parameters){
         $url = $parameters[0];
+
+
         $partsOfPath = $this->parseURL($url);
-        
+
         // Kontrola, zda první část cesty není prázdná
         if (!empty($partsOfPath[0])) {
             $controllerNameHalf = $this->toCamelNotation(array_shift($partsOfPath));
@@ -19,18 +21,17 @@ class RedirectController extends Controller {
             if (file_exists("Controller/$controllerName.php")) {
                 $this->controller = new $controllerName;
                 $this->controller->execute($partsOfPath);
-                
+
                 if($controllerNameHalf == "Notification" || $controllerNameHalf == "Api") {
-                    //$this->view = "empty";
+                    $this->view = "empty";
                 }
                 else {
                     $this->view = "htmlBase";
                 }
-                
             }
             else {
                 // Přesměrování na error, pokud controller neexistuje
-                $this->redirect("error"); 
+                // $this->redirect("error"); 
             }
         }
         else {
