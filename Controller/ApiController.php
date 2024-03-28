@@ -43,6 +43,8 @@ class ApiController extends Controller {
                     if($oddeleni == "platebni_brana"){
                         print "id=$cislo_objednavky&stav=$paymentState[state]&castka=$paymentState[amount]";
                     } else {
+                        //view waiting
+                        $this->view = "waiting";
                         //send data to the correct department
                         //send token in the header
                         $ch = curl_init();
@@ -61,7 +63,12 @@ class ApiController extends Controller {
                         ));
                         $response = curl_exec($ch);
                         curl_close($ch);
-                        var_dump($response);
+                        /*var_dump($response);
+                        var_dump(HTTP_BUILD_QUERY(array(
+                            "id" => $cislo_objednavky, 
+                            "stav" => $paymentState['state'], 
+                            "castka" => $paymentState['amount']
+                        )));*/
 
                         //redirect to the correct department
                         $redirectURL = $url['url']."?".http_build_query(array(
