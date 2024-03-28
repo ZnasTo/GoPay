@@ -13,7 +13,6 @@ class NotificationController extends Controller
 
             // Funkce odešle notifikaci jinému oddělení
             Notifications::sendNotification($paymentId);
-           
         }
     }
     
