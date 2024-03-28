@@ -103,7 +103,7 @@ class ApiController extends Controller {
                     VALUES(NULL, '{$udaje['oddeleni']}',
                     '{$udaje['jmeno']}', '{$udaje['prijmeni']}', '{$udaje['email']}',
                     '{$udaje['telefon']}', '{$udaje['mesto']}', '{$udaje['ulice']}', '{$udaje['CP']}', '{$udaje['PSC']}',
-                    '{$castka}', NULL, NULL, NOW(), NULL, NULL, {$udaje['cislo_objednavky']}
+                    '{$castka}', NULL, NULL, NOW(), NULL, '{$request}', {$udaje['cislo_objednavky']}
                     );"
                 );
 
