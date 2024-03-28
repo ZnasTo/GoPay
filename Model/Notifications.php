@@ -54,21 +54,35 @@ class Notifications {
             }
 
             //ziskani cisla objednavky z databaze
-            $cisloObjednavky = Db::queryOne("SELECT cislo_objednavky FROM transakce WHERE id_transakce={$paymentInformation['order_number']}");
+            $cislo_objednavky = Db::queryOne("SELECT cislo_objednavky FROM transakce WHERE id_transakce={$paymentInformation['order_number']}");
 
             // ziskani url na kterou se ma poslat notifikace
-            $url = Db::queryOne("SELECT notification_url FROM oddeleni WHERE id_oddeleni={$department['oddeleni']}");
+            $queryResult = Db::queryOne("SELECT notification_url, api_token FROM oddeleni WHERE id_oddeleni={$department['oddeleni']}");
 
-            // odeslani notifikace
+            if ($queryResult == 1) {
+                return;
+            }
 
-            $url = $url['url'];
-            $url .= "?cisloObjednavky={$cisloObjednavky['cislo_objednavky']}&stav={$paymentState}";
-
-            $ch = curl_init($url);
+            $apiToken = $queryResult["api_token"];
+            $url = $queryResult["notification_url"];
+            //send data to the correct department
+            //send token in the header
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, 
+                HTTP_BUILD_QUERY(array(
+                    "id" => $cislo_objednavky, 
+                    "stav" => $paymentState['state'], 
+                    "castka" => $paymentState['amount']
+                ))
+            );
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                'Authorization: Bearer '. $apiToken
+            ));
             $response = curl_exec($ch);
             curl_close($ch);
-
         }
     }
 }

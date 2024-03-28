@@ -1,7 +1,5 @@
 <?php
-class ApiController extends Controller {
-    const API_TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MTE0NjY5MjgsImV4cCI6MTc0NzQ2NjkyOCwicm9sZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9EQVRBX1JFQUQiLCJST0xFX0RBVEFfQ1JFQVRFIiwiUk9MRV9EQVRBX0VESVQiLCJST0xFX0RBVEFfREVMRVRFIiwiUk9MRV9DSEFOR0VfT1JERVJfU1RBVEUiXSwiY3VzdG9tZXJfZW1haWwiOiJhZG1pbkBzcHNlaW9zdHJhdmEuY3oifQ.VD0SOKmkhDLq5kBfkQYYsnscbeg2oMzZE9ipf45s99uaSEqFEINREf2ZpBPGhU25u0X82I9CqKpDOImmsIPvCfgwwhTzuN_2e9jYcK64UKaMgH9mYpBzxOwhgBxiVFa8sl0E4ITo2TqUKvGQtiIq4yQuFmz8pvxqs3XNNkGlWezmOwyFLVn_errJsXENfObjXnc5eVj1Kp-GnhPCvfSLX_uQYu8MOpGlB3Smkq1YqV6H4h6n72-ROB21E3TgxQ1XjPdbVJtQx8Rrm-QTN5qchJ3GL5Oz-J0OqAmaePK6r13sc7ZQ3wRyKC9_sRPjm2EbeZsn-53xvtyRMedjo4dH1w";
-    
+class ApiController extends Controller {    
     public function execute($parameters)
     {
         if(isset($_GET["brana"])){
@@ -34,12 +32,15 @@ class ApiController extends Controller {
                 $oddeleni = $vysledek["oddeleni"];
                 $cislo_objednavky = $vysledek["cislo_objednavky"];
 
-                $query = "SELECT url, notification_url FROM oddeleni WHERE nazev = '$oddeleni'";
-                $url = Db::queryOne($query);
-                if($url == 1){
+                $query = "SELECT url, notification_url, api_token FROM oddeleni WHERE nazev = '$oddeleni'";
+                $queryResult = Db::queryOne($query);
+                if($queryResult == 1){
                     $this->redirect("error");
                 }
                 else{
+                    $apiToken = $queryResult["api_token"];
+                    $url = $queryResult["url"];
+                    $notificationURL = $queryResult["notification_url"];
                     if($oddeleni == "platebni_brana"){
                         print "id=$cislo_objednavky&stav=$paymentState[state]&castka=$paymentState[amount]";
                     } else {
@@ -48,7 +49,7 @@ class ApiController extends Controller {
                         //send data to the correct department
                         //send token in the header
                         $ch = curl_init();
-                        curl_setopt($ch, CURLOPT_URL, $url['notification_url']);
+                        curl_setopt($ch, CURLOPT_URL, $notificationURL);
                         curl_setopt($ch, CURLOPT_POST, 1);
                         curl_setopt($ch, CURLOPT_POSTFIELDS, 
                             HTTP_BUILD_QUERY(array(
@@ -59,7 +60,7 @@ class ApiController extends Controller {
                         );
                         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                            'Authorization: Bearer '. self::API_TOKEN
+                            'Authorization: Bearer '. $apiToken
                         ));
                         $response = curl_exec($ch);
                         curl_close($ch);
@@ -71,7 +72,7 @@ class ApiController extends Controller {
                         )));*/
 
                         //redirect to the correct department
-                        $redirectURL = $url['url']."?".http_build_query(array(
+                        $redirectURL = $url."?".http_build_query(array(
                             "id" => $cislo_objednavky
                         ));
                         header("Location: $redirectURL");
