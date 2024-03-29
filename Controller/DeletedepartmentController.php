@@ -5,7 +5,7 @@ class DeletedepartmentController extends Controller
         if($_SESSION["prihlasen"] == true){
             if(isset($_GET["id"])){
                 $id = $_GET["id"];
-                Db::query("DELETE FROM oddeleni WHERE nazev LIKE '$id'");
+                Db::query("DELETE FROM oddeleni WHERE nazev LIKE ?", array($id));
             }
             $this->redirect("department");
         }
