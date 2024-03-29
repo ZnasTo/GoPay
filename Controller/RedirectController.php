@@ -23,7 +23,7 @@ class RedirectController extends Controller {
                 $this->controller->execute($partsOfPath);
 
                 if($controllerNameHalf == "Notification" || $controllerNameHalf == "Api") {
-                    $this->view = "empty";
+                    $this->view = "emptyBase";
                 }
                 else {
                     $this->view = "htmlBase";
