@@ -7,9 +7,9 @@ class ShowtokenController extends Controller
 
         if($_SESSION["prihlasen"] == true){
             // Kontrola jestli je zadané id transakce
-            if(isset($_GET["oddeleni"])) {
+            if(isset($_GET["department"])) {
     
-                $oddeleni = $_GET["oddeleni"];
+                $oddeleni = $_GET["department"];
     
                 $this->view = "showToken";
                 $result = Db::queryOne("SELECT api_token
@@ -22,7 +22,7 @@ class ShowtokenController extends Controller
     
             } else {
                 // Přesměrování zpátky na správu
-                $this->redirect("oddeleni");
+                $this->redirect("department");
             }
         }
         else{
