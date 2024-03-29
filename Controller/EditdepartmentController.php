@@ -22,7 +22,8 @@ class EditdepartmentController extends Controller
                         array($nazev, 
                             $url, 
                             $notification_url, 
-                            $api_token, $id
+                            $api_token, 
+                            $id
                         )
                     );
                     $this->redirect("department");
