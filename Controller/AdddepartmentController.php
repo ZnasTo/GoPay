@@ -9,7 +9,14 @@ class AdddepartmentController extends Controller
                 $url = $_POST["url"];
                 $notification_url = $_POST["notification_url"];
                 $api_token = $_POST["api_token"];
-                Db::query("INSERT INTO oddeleni (nazev, url, notification_url, api_token) VALUES (?, ?, ?, ?)", array($nazev, $url, $notification_url, $api_token));
+                Db::query(
+                    "INSERT INTO oddeleni (nazev, url, notification_url, api_token) VALUES (?, ?, ?, ?)", 
+                    array($nazev, 
+                        $url, 
+                        $notification_url, 
+                        $api_token
+                    )
+                );
                 $this->redirect("department");
             }
         }
@@ -17,5 +24,4 @@ class AdddepartmentController extends Controller
             $this->redirect("login");
         }
     }
-    
 }
