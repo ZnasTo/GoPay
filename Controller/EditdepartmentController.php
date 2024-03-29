@@ -12,12 +12,24 @@ class EditdepartmentController extends Controller
                     $url = $_POST["url"];
                     $notification_url = $_POST["notification_url"];
                     $api_token = $_POST["api_token"];
-                    Db::query("UPDATE oddeleni SET nazev = '$nazev', url = '$url', notification_url = '$notification_url', api_token = '$api_token' WHERE nazev LIKE '$id'");
+                    Db::query(
+                        "UPDATE oddeleni SET 
+                            nazev = ?, 
+                            url = ?, 
+                            notification_url = ?, 
+                            api_token = ? 
+                            WHERE nazev LIKE ?;", 
+                        array($nazev, 
+                            $url, 
+                            $notification_url, 
+                            $api_token, $id
+                        )
+                    );
                     $this->redirect("department");
                 }
+            } else {
+                $this->redirect("department");
             }
-
-            
         }
         else{
             $this->redirect("login");
