@@ -135,7 +135,7 @@ class ApiController extends Controller {
 
                 //print $query;
                 if(is_bool($query)) {
-                    //$this->redirect("error");
+                    $this->redirect("error");
                 } else {
                     $udaje["cislo_objednavky"] = $query;
                     $urlParameters["buyerData"] = $udaje;
@@ -149,7 +149,7 @@ class ApiController extends Controller {
                     $query = "SELECT url FROM oddeleni WHERE nazev = ?";
                     $url = Db::queryOne($query, array($udaje['oddeleni']));
                     if(is_bool($query)){
-                        //$this->redirect("error");
+                        $this->redirect("error");
                     }
                     else{
                         $url = $url."?id='{$udaje['cislo_objednavky']}'&error=platbu_se_nepodařilo_vytvořit";
