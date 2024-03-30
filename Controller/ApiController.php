@@ -146,8 +146,8 @@ class ApiController extends Controller {
 
                 if(str_contains($url,"error")){
                     //Získat url z spravneho oddělení z database
-                    $query = "SELECT url FROM oddeleni WHERE nazev = '$udaje[oddeleni]'";
-                    $url = Db::queryOne($query);
+                    $query = "SELECT url FROM oddeleni WHERE nazev = ?";
+                    $url = Db::queryOne($query, array($udaje['oddeleni']));
                     if(is_bool($query)){
                         //$this->redirect("error");
                     }
