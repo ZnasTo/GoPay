@@ -56,15 +56,15 @@ class Notifications {
             $department = $vysledek["oddeleni"];
             $cislo_objednavky = $vysledek["cislo_objednavky"];
 
-            if($department == "platebni_brana"){
-                return;
-            }
-
             // ziskani url na kterou se ma poslat notifikace
             $query = "SELECT notification_url, api_token FROM oddeleni WHERE nazev = '{$department}'";
             $queryResult = Db::queryOne($query);
 
             if($queryResult == 1){
+                return;
+            }
+
+            if($queryResult["notification_url"] == null || $queryResult["notification_url"] == ""){
                 return;
             }
 

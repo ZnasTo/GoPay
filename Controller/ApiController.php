@@ -41,9 +41,7 @@ class ApiController extends Controller {
                     $apiToken = $queryResult["api_token"];
                     $url = $queryResult["url"];
                     $notificationURL = $queryResult["notification_url"];
-                    if($oddeleni == "platebni_brana"){
-                        print "id=$cislo_objednavky&stav=$paymentState[state]&castka=$paymentState[amount]";
-                    } else {
+                    if(($url != null || $url != "") && ($notificationURL != null || $notificationURL != "")) {
                         //view waiting
                         $this->view = "waiting";
                         //send data to the correct department
